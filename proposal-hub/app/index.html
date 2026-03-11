@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposal Hub v1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">Spacekayak</p>
+          <h1>Proposal Hub</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="proposal-meta">
+            <span class="pill">Fairplay</span>
+            <span class="pill pill-status" id="proposalStatus">Sent</span>
+            <span class="pill">v1.3</span>
+          </div>
+          <div class="mode-toggle" role="tablist" aria-label="View mode">
+            <button class="mode-btn active" id="storyModeBtn" type="button">Story Mode</button>
+            <button class="mode-btn" id="builderModeBtn" type="button">Builder Mode</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="left-nav">
+          <button class="nav-link active" data-screen="overview">Overview</button>
+          <button class="nav-link" data-screen="scope">Scope Builder</button>
+          <button class="nav-link" data-screen="timeline">Timeline Planner</button>
+          <button class="nav-link" data-screen="commercials">Commercials</button>
+          <button class="nav-link" data-screen="team">Team</button>
+          <button class="nav-link" data-screen="proof">Proof</button>
+          <button class="nav-link" data-screen="approval">Approval</button>
+          <button class="nav-link" data-screen="activity">Activity</button>
+        </aside>
+
+        <section class="content" id="screenContainer">
+          <section class="screen active" data-screen="overview">
+            <p class="kicker">Proposal Narrative</p>
+            <h2>
+              Building a world class brand and seamless web experience
+              <span>for Fairplay</span>
+            </h2>
+            <p class="lead">
+              This portal turns the proposal into a collaborative workspace where you can tune scope,
+              understand tradeoffs, and approve with confidence.
+            </p>
+            <div class="card-grid three">
+              <article class="metric-card">
+                <p>Projected Budget</p>
+                <h3 id="overviewBudget">$4,500</h3>
+              </article>
+              <article class="metric-card">
+                <p>Duration</p>
+                <h3 id="overviewDuration">36 days</h3>
+              </article>
+              <article class="metric-card">
+                <p>Engagement Model</p>
+                <h3>2 phases, iterative checkpoints</h3>
+              </article>
+            </div>
+            <div class="changes-panel">
+              <h4>What's changed since last version</h4>
+              <ul>
+                <li>Added CMS setup and hosting as explicit deliverable.</li>
+                <li>Commercial table now separated by Design and Development line items.</li>
+                <li>Timeline corrected to remove date conflicts and preserve milestone order.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="screen" data-screen="scope">
+            <div class="section-head">
+              <p class="kicker">Configure Scope</p>
+              <h2>Scope Builder</h2>
+            </div>
+
+            <div class="tier-row">
+              <p>Complexity Tier</p>
+              <div class="tier-buttons" id="tierButtons">
+                <button type="button" class="tier-btn active" data-tier="lean">Lean</button>
+                <button type="button" class="tier-btn" data-tier="standard">Standard</button>
+                <button type="button" class="tier-btn" data-tier="extended">Extended</button>
+              </div>
+            </div>
+
+            <div class="card-grid two">
+              <article class="phase-card">
+                <h3>Phase 1: Brand Elevation</h3>
+                <label><input type="checkbox" checked disabled /> Brand identity refinement</label>
+                <label><input type="checkbox" checked disabled /> Positioning check</label>
+                <label><input type="checkbox" checked disabled /> Brand adapts</label>
+                <label><input type="checkbox" checked disabled /> Core brand toolkit</label>
+              </article>
+
+              <article class="phase-card">
+                <h3>Phase 2: Web Experience</h3>
+                <label><input type="checkbox" checked disabled /> IA and wireframes</label>
+                <label><input type="checkbox" checked disabled /> Visual and interaction design</label>
+                <label><input type="checkbox" checked disabled /> Responsive webflow build</label>
+                <label><input type="checkbox" checked disabled /> CMS setup and hosting handoff</label>
+              </article>
+            </div>
+
+            <article class="addon-panel">
+              <h3>Optional Add-ons</h3>
+              <div class="addon-grid" id="addonGrid"></div>
+            </article>
+          </section>
+
+          <section class="screen" data-screen="timeline">
+            <div class="section-head">
+              <p class="kicker">Plan Delivery</p>
+              <h2>Timeline Planner</h2>
+            </div>
+
+            <div class="timeline-table-wrap">
+              <table class="timeline-table" id="timelineTable">
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>Start</th>
+                    <th>Duration (days)</th>
+                    <th>End</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="hint">Dates auto-adjust using selected tier and add-ons.</p>
+          </section>
+
+          <section class="screen" data-screen="commercials">
+            <div class="section-head">
+              <p class="kicker">Commercial Controls</p>
+              <h2>Commercials</h2>
+            </div>
+
+            <div class="commercial-grid">
+              <article>
+                <table class="commercial-table" id="commercialTable">
+                  <thead>
+                    <tr>
+                      <th>Line Item</th>
+                      <th>Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Subtotal</td>
+                      <td id="subtotalCell">$0</td>
+                    </tr>
+                    <tr>
+                      <td>Discount</td>
+                      <td id="discountCell">$0</td>
+                    </tr>
+                    <tr class="total-row">
+                      <td>Total</td>
+                      <td id="totalCell">$0</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+
+              <article class="pricing-controls">
+                <label>
+                  Discount (%)
+                  <input id="discountInput" type="range" min="0" max="25" step="1" value="0" />
+                </label>
+                <p id="discountLabel">0%</p>
+                <label>
+                  Payment terms
+                  <select id="paymentTerms">
+                    <option value="50-50">50% advance / 50% delivery</option>
+                    <option value="40-40-20">40% advance / 40% midpoint / 20% delivery</option>
+                    <option value="monthly">Monthly retainer</option>
+                  </select>
+                </label>
+                <button class="primary">Download Snapshot PDF</button>
+              </article>
+            </div>
+          </section>
+
+          <section class="screen placeholder" data-screen="team">
+            <h2>Team & Operating Model</h2>
+            <p>Coming next in build phase: owner matrix, cadence, and escalation paths.</p>
+          </section>
+          <section class="screen placeholder" data-screen="proof">
+            <h2>Proof</h2>
+            <p>Coming next in build phase: filterable case studies and outcome evidence.</p>
+          </section>
+          <section class="screen placeholder" data-screen="approval">
+            <h2>Approval & Signoff</h2>
+            <p>Coming next in build phase: signer flow, redline requests, and acceptance state.</p>
+          </section>
+          <section class="screen placeholder" data-screen="activity">
+            <h2>Activity Log</h2>
+            <p>Coming next in build phase: version history and negotiation trail.</p>
+          </section>
+        </section>
+
+        <aside class="summary-rail">
+          <h3>Deal Summary</h3>
+          <div class="summary-list">
+            <div>
+              <p>Total Budget</p>
+              <strong id="summaryBudget">$4,500</strong>
+            </div>
+            <div>
+              <p>Total Duration</p>
+              <strong id="summaryDuration">36 days</strong>
+            </div>
+            <div>
+              <p>Scope Blocks</p>
+              <strong id="summaryScopeCount">8 selected</strong>
+            </div>
+            <div>
+              <p>Current Tier</p>
+              <strong id="summaryTier">Lean</strong>
+            </div>
+            <div>
+              <p>Payment Terms</p>
+              <strong id="summaryTerms">50% / 50%</strong>
+            </div>
+          </div>
+
+          <div class="impact-chips" id="impactChips"></div>
+
+          <div class="rail-actions">
+            <button class="primary">Approve</button>
+            <button>Request Changes</button>
+            <button>Book Call</button>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
