@@ -3,247 +3,169 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proposal Hub v1</title>
+    <title>Spacekayak Build Store</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,500;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500;1,700&family=Sora:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="app-shell">
-      <header class="topbar">
-        <div class="brand-block">
-          <p class="eyebrow">Spacekayak</p>
-          <h1>Proposal Hub</h1>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="shell">
+      <header class="header">
+        <div>
+          <p class="micro">spacekayak.xyz</p>
+          <h1>Build Your Growth Stack</h1>
         </div>
-        <div class="topbar-right">
-          <div class="proposal-meta">
-            <span class="pill">Fairplay</span>
-            <span class="pill pill-status" id="proposalStatus">Sent</span>
-            <span class="pill">v1.3</span>
-          </div>
-          <div class="mode-toggle" role="tablist" aria-label="View mode">
-            <button class="mode-btn active" id="storyModeBtn" type="button">Story Mode</button>
-            <button class="mode-btn" id="builderModeBtn" type="button">Builder Mode</button>
+        <div class="header-right">
+          <p class="header-note">Founder-first ecommerce experience for design + web delivery.</p>
+          <div class="badge-row">
+            <span class="badge">Fast estimates</span>
+            <span class="badge">Transparent pricing</span>
+            <span class="badge">Book call in 1 step</span>
           </div>
         </div>
       </header>
 
-      <main class="layout">
-        <aside class="left-nav">
-          <button class="nav-link active" data-screen="overview">Overview</button>
-          <button class="nav-link" data-screen="scope">Scope Builder</button>
-          <button class="nav-link" data-screen="timeline">Timeline Planner</button>
-          <button class="nav-link" data-screen="commercials">Commercials</button>
-          <button class="nav-link" data-screen="team">Team</button>
-          <button class="nav-link" data-screen="proof">Proof</button>
-          <button class="nav-link" data-screen="approval">Approval</button>
-          <button class="nav-link" data-screen="activity">Activity</button>
-        </aside>
-
-        <section class="content" id="screenContainer">
-          <section class="screen active" data-screen="overview">
-            <p class="kicker">Proposal Narrative</p>
+      <main class="main-grid">
+        <section>
+          <article class="hero">
+            <p class="micro">Pick exactly what you need</p>
             <h2>
-              Building a world class brand and seamless web experience
-              <span>for Fairplay</span>
+              Add services like products,
+              <span>see your live build card,</span>
+              and lock a strategy call.
             </h2>
-            <p class="lead">
-              This portal turns the proposal into a collaborative workspace where you can tune scope,
-              understand tradeoffs, and approve with confidence.
+            <p>
+              Proposal generation becomes backend logic. Founders get a direct storefront-like flow with clear pricing,
+              estimated timelines, and one-click handoff into a booked call.
             </p>
-            <div class="card-grid three">
-              <article class="metric-card">
-                <p>Projected Budget</p>
-                <h3 id="overviewBudget">$4,500</h3>
-              </article>
-              <article class="metric-card">
-                <p>Duration</p>
-                <h3 id="overviewDuration">36 days</h3>
-              </article>
-              <article class="metric-card">
-                <p>Engagement Model</p>
-                <h3>2 phases, iterative checkpoints</h3>
-              </article>
-            </div>
-            <div class="changes-panel">
-              <h4>What's changed since last version</h4>
-              <ul>
-                <li>Added CMS setup and hosting as explicit deliverable.</li>
-                <li>Commercial table now separated by Design and Development line items.</li>
-                <li>Timeline corrected to remove date conflicts and preserve milestone order.</li>
-              </ul>
-            </div>
-          </section>
-
-          <section class="screen" data-screen="scope">
-            <div class="section-head">
-              <p class="kicker">Configure Scope</p>
-              <h2>Scope Builder</h2>
-            </div>
-
-            <div class="tier-row">
-              <p>Complexity Tier</p>
-              <div class="tier-buttons" id="tierButtons">
-                <button type="button" class="tier-btn active" data-tier="lean">Lean</button>
-                <button type="button" class="tier-btn" data-tier="standard">Standard</button>
-                <button type="button" class="tier-btn" data-tier="extended">Extended</button>
+            <div class="hero-stats">
+              <div>
+                <strong>&lt; 3 mins</strong>
+                <p>to build shortlist</p>
+              </div>
+              <div>
+                <strong>Live totals</strong>
+                <p>one-time + monthly</p>
+              </div>
+              <div>
+                <strong>Call handoff</strong>
+                <p>build card attached</p>
               </div>
             </div>
+          </article>
 
-            <div class="card-grid two">
-              <article class="phase-card">
-                <h3>Phase 1: Brand Elevation</h3>
-                <label><input type="checkbox" checked disabled /> Brand identity refinement</label>
-                <label><input type="checkbox" checked disabled /> Positioning check</label>
-                <label><input type="checkbox" checked disabled /> Brand adapts</label>
-                <label><input type="checkbox" checked disabled /> Core brand toolkit</label>
-              </article>
-
-              <article class="phase-card">
-                <h3>Phase 2: Web Experience</h3>
-                <label><input type="checkbox" checked disabled /> IA and wireframes</label>
-                <label><input type="checkbox" checked disabled /> Visual and interaction design</label>
-                <label><input type="checkbox" checked disabled /> Responsive webflow build</label>
-                <label><input type="checkbox" checked disabled /> CMS setup and hosting handoff</label>
-              </article>
-            </div>
-
-            <article class="addon-panel">
-              <h3>Optional Add-ons</h3>
-              <div class="addon-grid" id="addonGrid"></div>
-            </article>
+          <section class="controls">
+            <div class="chip-group" id="categoryFilters"></div>
           </section>
 
-          <section class="screen" data-screen="timeline">
-            <div class="section-head">
-              <p class="kicker">Plan Delivery</p>
-              <h2>Timeline Planner</h2>
-            </div>
-
-            <div class="timeline-table-wrap">
-              <table class="timeline-table" id="timelineTable">
-                <thead>
-                  <tr>
-                    <th>Milestone</th>
-                    <th>Start</th>
-                    <th>Duration (days)</th>
-                    <th>End</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <p class="hint">Dates auto-adjust using selected tier and add-ons.</p>
-          </section>
-
-          <section class="screen" data-screen="commercials">
-            <div class="section-head">
-              <p class="kicker">Commercial Controls</p>
-              <h2>Commercials</h2>
-            </div>
-
-            <div class="commercial-grid">
-              <article>
-                <table class="commercial-table" id="commercialTable">
-                  <thead>
-                    <tr>
-                      <th>Line Item</th>
-                      <th>Cost</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                  <tfoot>
-                    <tr>
-                      <td>Subtotal</td>
-                      <td id="subtotalCell">$0</td>
-                    </tr>
-                    <tr>
-                      <td>Discount</td>
-                      <td id="discountCell">$0</td>
-                    </tr>
-                    <tr class="total-row">
-                      <td>Total</td>
-                      <td id="totalCell">$0</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </article>
-
-              <article class="pricing-controls">
-                <label>
-                  Discount (%)
-                  <input id="discountInput" type="range" min="0" max="25" step="1" value="0" />
-                </label>
-                <p id="discountLabel">0%</p>
-                <label>
-                  Payment terms
-                  <select id="paymentTerms">
-                    <option value="50-50">50% advance / 50% delivery</option>
-                    <option value="40-40-20">40% advance / 40% midpoint / 20% delivery</option>
-                    <option value="monthly">Monthly retainer</option>
-                  </select>
-                </label>
-                <button class="primary">Download Snapshot PDF</button>
-              </article>
-            </div>
-          </section>
-
-          <section class="screen placeholder" data-screen="team">
-            <h2>Team & Operating Model</h2>
-            <p>Coming next in build phase: owner matrix, cadence, and escalation paths.</p>
-          </section>
-          <section class="screen placeholder" data-screen="proof">
-            <h2>Proof</h2>
-            <p>Coming next in build phase: filterable case studies and outcome evidence.</p>
-          </section>
-          <section class="screen placeholder" data-screen="approval">
-            <h2>Approval & Signoff</h2>
-            <p>Coming next in build phase: signer flow, redline requests, and acceptance state.</p>
-          </section>
-          <section class="screen placeholder" data-screen="activity">
-            <h2>Activity Log</h2>
-            <p>Coming next in build phase: version history and negotiation trail.</p>
-          </section>
+          <section class="service-grid" id="serviceGrid"></section>
         </section>
 
-        <aside class="summary-rail">
-          <h3>Deal Summary</h3>
-          <div class="summary-list">
+        <aside class="build-card">
+          <div class="build-head">
+            <p class="micro">Live cart</p>
+            <h3>Your Build Card</h3>
+            <p id="buildId" class="build-id">Build ID: SK-BLD-001</p>
+          </div>
+
+          <div id="selectedList" class="selected-list"></div>
+
+          <div class="totals">
             <div>
-              <p>Total Budget</p>
-              <strong id="summaryBudget">$4,500</strong>
+              <span>One-time subtotal</span>
+              <strong id="oneTimeTotal">$0</strong>
             </div>
             <div>
-              <p>Total Duration</p>
-              <strong id="summaryDuration">36 days</strong>
+              <span>Monthly subtotal</span>
+              <strong id="monthlyTotal">$0/mo</strong>
             </div>
             <div>
-              <p>Scope Blocks</p>
-              <strong id="summaryScopeCount">8 selected</strong>
+              <span>Estimated timeline</span>
+              <strong id="timelineTotal">0 days</strong>
             </div>
-            <div>
-              <p>Current Tier</p>
-              <strong id="summaryTier">Lean</strong>
-            </div>
-            <div>
-              <p>Payment Terms</p>
-              <strong id="summaryTerms">50% / 50%</strong>
+            <div class="total-grand">
+              <span>Projected first invoice</span>
+              <strong id="invoiceTotal">$0</strong>
             </div>
           </div>
 
-          <div class="impact-chips" id="impactChips"></div>
-
-          <div class="rail-actions">
-            <button class="primary">Approve</button>
-            <button>Request Changes</button>
-            <button>Book Call</button>
+          <div class="actions">
+            <button type="button" id="bookCallBtn" class="primary">Book Strategy Call</button>
+            <button type="button" id="clearBtn">Clear Build</button>
           </div>
+
+          <details class="backend-preview">
+            <summary>Proposal backend payload</summary>
+            <pre id="backendPayload"></pre>
+          </details>
         </aside>
       </main>
+
+      <section class="steps">
+        <article>
+          <p>1</p>
+          <h4>Build Cart</h4>
+          <span>Add services like ecommerce products.</span>
+        </article>
+        <article>
+          <p>2</p>
+          <h4>Review Price</h4>
+          <span>Get instant one-time/monthly totals and timeline.</span>
+        </article>
+        <article>
+          <p>3</p>
+          <h4>Book Call</h4>
+          <span>Share build card directly in scheduling workflow.</span>
+        </article>
+      </section>
+    </div>
+
+    <div class="modal hidden" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <div class="modal-top">
+          <h3 id="modalTitle">Book Strategy Call</h3>
+          <button type="button" id="closeModalBtn" class="x-btn">x</button>
+        </div>
+
+        <form id="bookingForm">
+          <label>
+            Name
+            <input name="name" required />
+          </label>
+          <label>
+            Work email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Company
+            <input name="company" required />
+          </label>
+          <div class="split">
+            <label>
+              Preferred date
+              <input type="date" name="date" required />
+            </label>
+            <label>
+              Preferred time
+              <input type="time" name="time" required />
+            </label>
+          </div>
+          <label>
+            Notes
+            <textarea name="notes" rows="3" placeholder="Goals, timelines, constraints"></textarea>
+          </label>
+          <button type="submit" class="primary full">Confirm and Attach Build Card</button>
+        </form>
+
+        <p class="success hidden" id="bookingSuccess"></p>
+      </div>
     </div>
 
     <script src="./app.js"></script>

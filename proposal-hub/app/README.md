@@ -1,14 +1,13 @@
-# Proposal Hub App (v1 shell)
+# Proposal Hub Storefront (v1 shell)
 
-This is a no-dependency frontend prototype for Proposal Hub.
+This is a no-dependency frontend prototype for an ecommerce-style Proposal Hub experience.
 
 ## Includes
-- Story Mode / Builder Mode toggle
-- Navigation across v1 sections
-- Interactive Scope Builder tier and add-ons
-- Live Timeline Planner date recalculation
-- Live Commercials table with discount slider
-- Persistent Deal Summary rail
+- Service catalog with category filtering
+- Add/remove controls that behave like a cart
+- Live build card with one-time and monthly totals
+- Booking modal for strategy call handoff
+- Backend payload preview (proposal engine input)
 
 ## Run
 

@@ -1,306 +1,328 @@
-const appState = {
-  mode: "story",
-  activeScreen: "overview",
-  tier: "lean",
-  discountPct: 0,
-  paymentTerms: "50-50",
-  addons: {
-    cmsTraining: false,
-    conversionCopy: false,
-    analyticsSetup: false,
-    designSystem: false,
+const services = [
+  {
+    id: "brand-refresh",
+    category: "Brand",
+    title: "Brand Refresh Sprint",
+    description: "Identity cleanup, positioning pass, and practical brand toolkit.",
+    kind: "one-time",
+    price: 1500,
+    days: 10,
   },
-};
-
-const tierConfig = {
-  lean: { costMultiplier: 1.0, dayMultiplier: 1.0 },
-  standard: { costMultiplier: 1.18, dayMultiplier: 1.2 },
-  extended: { costMultiplier: 1.42, dayMultiplier: 1.45 },
-};
-
-const baseLineItems = [
-  { name: "Brand Elevation", amount: 1500 },
-  { name: "Web Design and Direction", amount: 1500 },
-  { name: "Webflow Development", amount: 3000 },
+  {
+    id: "visual-system",
+    category: "Brand",
+    title: "Visual System Upgrade",
+    description: "Component-level visual language for product and marketing consistency.",
+    kind: "one-time",
+    price: 2200,
+    days: 12,
+  },
+  {
+    id: "landing-design",
+    category: "Web",
+    title: "Landing Direction + UX",
+    description: "Narrative structure, wireframes, and high-fidelity interface design.",
+    kind: "one-time",
+    price: 1800,
+    days: 8,
+  },
+  {
+    id: "webflow-build",
+    category: "Web",
+    title: "Webflow Build + QA",
+    description: "Responsive implementation, animation pass, and production QA.",
+    kind: "one-time",
+    price: 3200,
+    days: 14,
+  },
+  {
+    id: "cms-retainer",
+    category: "Growth Ops",
+    title: "CMS Growth Retainer",
+    description: "Monthly experiments, content operations, and publishing support.",
+    kind: "monthly",
+    price: 950,
+    days: 0,
+  },
+  {
+    id: "analytics",
+    category: "Growth Ops",
+    title: "Analytics + Funnel Tracking",
+    description: "Event map, dashboards, and conversion-grade instrumentation setup.",
+    kind: "one-time",
+    price: 1200,
+    days: 5,
+  },
+  {
+    id: "copy-system",
+    category: "Content",
+    title: "Conversion Copy System",
+    description: "Core page messaging and modular copy blocks for rapid iteration.",
+    kind: "one-time",
+    price: 1400,
+    days: 6,
+  },
+  {
+    id: "investor-deck",
+    category: "Content",
+    title: "Investor Deck Narrative",
+    description: "Fundraise-ready deck narrative and visual structure cleanup.",
+    kind: "one-time",
+    price: 1100,
+    days: 4,
+  },
 ];
 
-const addonDefinitions = {
-  cmsTraining: { label: "CMS Team Training", cost: 450, days: 2 },
-  conversionCopy: { label: "Conversion Copywriting", cost: 800, days: 4 },
-  analyticsSetup: { label: "Analytics + Events Setup", cost: 600, days: 2 },
-  designSystem: { label: "Reusable UI Design System", cost: 1200, days: 6 },
+const state = {
+  category: "All",
+  cart: {},
+  lastBookedAt: null,
 };
 
-const baseMilestones = [
-  { name: "Discovery and Kickoff", days: 3 },
-  { name: "Brand Elevation", days: 21 },
-  { name: "Web IA and Visuals", days: 10 },
-  { name: "Webflow Build and QA", days: 12 },
-  { name: "Handoff", days: 2 },
-];
+const categories = ["All", ...new Set(services.map((service) => service.category))];
 
-function qs(sel) {
-  return document.querySelector(sel);
+function qs(selector) {
+  return document.querySelector(selector);
 }
 
-function qsa(sel) {
-  return Array.from(document.querySelectorAll(sel));
+function qsa(selector) {
+  return Array.from(document.querySelectorAll(selector));
 }
 
-function formatMoney(amount) {
-  return `$${amount.toLocaleString()}`;
+function formatMoney(value) {
+  return `$${Number(value).toLocaleString("en-US")}`;
 }
 
-function round(value) {
-  return Math.round(value);
+function formatMonthly(value) {
+  return `${formatMoney(value)}/mo`;
 }
 
-function selectedAddons() {
-  return Object.entries(appState.addons)
-    .filter(([, enabled]) => enabled)
-    .map(([key]) => ({ key, ...addonDefinitions[key] }));
+function cartItems() {
+  return Object.entries(state.cart)
+    .filter(([, qty]) => qty > 0)
+    .map(([id, qty]) => ({ ...services.find((service) => service.id === id), qty }));
 }
 
-function recalc() {
-  const tier = tierConfig[appState.tier];
-  const addons = selectedAddons();
+function filteredServices() {
+  if (state.category === "All") {
+    return services;
+  }
+  return services.filter((service) => service.category === state.category);
+}
 
-  const lineItems = baseLineItems.map((item) => ({
-    ...item,
-    adjusted: round(item.amount * tier.costMultiplier),
-  }));
+function computeTotals() {
+  const items = cartItems();
 
-  const addonItems = addons.map((addon) => ({
-    name: addon.label,
-    adjusted: addon.cost,
-  }));
+  const oneTimeTotal = items
+    .filter((item) => item.kind === "one-time")
+    .reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const subtotal = lineItems.reduce((sum, item) => sum + item.adjusted, 0) + addonItems.reduce((sum, item) => sum + item.adjusted, 0);
-  const discount = round((subtotal * appState.discountPct) / 100);
-  const total = subtotal - discount;
+  const monthlyTotal = items
+    .filter((item) => item.kind === "monthly")
+    .reduce((sum, item) => sum + item.price * item.qty, 0);
 
-  const baseDays = baseMilestones.reduce((sum, m) => sum + m.days, 0);
-  const tierDays = round(baseDays * tier.dayMultiplier);
-  const addonDays = addons.reduce((sum, addon) => sum + addon.days, 0);
-  const totalDays = tierDays + addonDays;
+  const timelineTotal = items.reduce((sum, item) => sum + item.days * item.qty, 0);
 
   return {
-    lineItems,
-    addonItems,
-    subtotal,
-    discount,
-    total,
-    totalDays,
-    addons,
+    oneTimeTotal,
+    monthlyTotal,
+    timelineTotal,
+    invoiceTotal: oneTimeTotal + monthlyTotal,
+    items,
   };
 }
 
-function renderAddons() {
-  const grid = qs("#addonGrid");
-  grid.innerHTML = "";
+function nextBuildId() {
+  const seed = Date.now().toString().slice(-5);
+  return `SK-BLD-${seed}`;
+}
 
-  Object.entries(addonDefinitions).forEach(([key, addon]) => {
-    const checked = appState.addons[key] ? "checked" : "";
-    const node = document.createElement("article");
-    node.className = "addon-item";
-    node.innerHTML = `
-      <label>
-        <input type="checkbox" data-addon-key="${key}" ${checked} /> ${addon.label}
-      </label>
-      <p class="addon-meta">+${formatMoney(addon.cost)} and +${addon.days} days</p>
+function renderCategoryFilters() {
+  const root = qs("#categoryFilters");
+  root.innerHTML = "";
+
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `chip ${state.category === category ? "active" : ""}`;
+    button.textContent = category;
+    button.addEventListener("click", () => {
+      state.category = category;
+      renderAll();
+    });
+    root.appendChild(button);
+  });
+}
+
+function renderServices() {
+  const root = qs("#serviceGrid");
+  root.innerHTML = "";
+
+  filteredServices().forEach((service) => {
+    const quantity = state.cart[service.id] || 0;
+
+    const card = document.createElement("article");
+    card.className = "service-card";
+
+    const cadence = service.kind === "monthly" ? formatMonthly(service.price) : formatMoney(service.price);
+
+    card.innerHTML = `
+      <p class="service-category">${service.category}</p>
+      <h3>${service.title}</h3>
+      <p class="service-description">${service.description}</p>
+      <div class="service-meta">
+        <span>${cadence}</span>
+        <span>${service.days ? `${service.days} days` : "recurring"}</span>
+      </div>
+      <div class="service-actions">
+        <button type="button" data-remove="${service.id}" ${quantity === 0 ? "disabled" : ""}>-</button>
+        <span>${quantity}</span>
+        <button type="button" data-add="${service.id}">+</button>
+      </div>
     `;
-    grid.appendChild(node);
+
+    root.appendChild(card);
   });
 
-  qsa("input[data-addon-key]").forEach((checkbox) => {
-    checkbox.addEventListener("change", (event) => {
-      const key = event.target.getAttribute("data-addon-key");
-      appState.addons[key] = event.target.checked;
+  qsa("button[data-add]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-add");
+      state.cart[id] = (state.cart[id] || 0) + 1;
+      renderAll();
+    });
+  });
+
+  qsa("button[data-remove]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-remove");
+      state.cart[id] = Math.max((state.cart[id] || 0) - 1, 0);
       renderAll();
     });
   });
 }
 
-function addDays(date, days) {
-  const next = new Date(date);
-  next.setDate(next.getDate() + days);
-  return next;
-}
+function renderSelected() {
+  const root = qs("#selectedList");
+  const { items } = computeTotals();
 
-function fmtDate(date) {
-  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-}
-
-function renderTimeline(result) {
-  const tbody = qs("#timelineTable tbody");
-  tbody.innerHTML = "";
-
-  const today = new Date();
-  let cursor = today;
-
-  const tier = tierConfig[appState.tier];
-
-  baseMilestones.forEach((milestone) => {
-    const duration = round(milestone.days * tier.dayMultiplier);
-    const start = cursor;
-    const end = addDays(start, duration);
-    cursor = end;
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${milestone.name}</td>
-      <td>${fmtDate(start)}</td>
-      <td>${duration}</td>
-      <td>${fmtDate(end)}</td>
+  if (!items.length) {
+    root.innerHTML = `
+      <p class="empty">No services added yet. Add from the catalog to start your build card.</p>
     `;
-    tbody.appendChild(row);
-  });
-
-  if (result.addons.length) {
-    result.addons.forEach((addon) => {
-      const start = cursor;
-      const end = addDays(start, addon.days);
-      cursor = end;
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${addon.label}</td>
-        <td>${fmtDate(start)}</td>
-        <td>${addon.days}</td>
-        <td>${fmtDate(end)}</td>
-      `;
-      tbody.appendChild(row);
-    });
+    return;
   }
-}
 
-function renderCommercials(result) {
-  const tbody = qs("#commercialTable tbody");
-  tbody.innerHTML = "";
+  root.innerHTML = "";
 
-  [...result.lineItems, ...result.addonItems].forEach((item) => {
-    const row = document.createElement("tr");
+  items.forEach((item) => {
+    const row = document.createElement("article");
+    row.className = "selected-item";
     row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${formatMoney(item.adjusted)}</td>
+      <div>
+        <h4>${item.title}</h4>
+        <p>${item.qty} x ${item.kind === "monthly" ? formatMonthly(item.price) : formatMoney(item.price)}</p>
+      </div>
+      <strong>${item.kind === "monthly" ? formatMonthly(item.price * item.qty) : formatMoney(item.price * item.qty)}</strong>
     `;
-    tbody.appendChild(row);
+    root.appendChild(row);
   });
-
-  qs("#subtotalCell").textContent = formatMoney(result.subtotal);
-  qs("#discountCell").textContent = `-${formatMoney(result.discount)}`;
-  qs("#totalCell").textContent = formatMoney(result.total);
 }
 
-function renderSummary(result) {
-  qs("#summaryBudget").textContent = formatMoney(result.total);
-  qs("#overviewBudget").textContent = formatMoney(result.total);
-  qs("#summaryDuration").textContent = `${result.totalDays} days`;
-  qs("#overviewDuration").textContent = `${result.totalDays} days`;
-  qs("#summaryScopeCount").textContent = `${baseLineItems.length + result.addonItems.length + 4} selected`;
-  qs("#summaryTier").textContent = appState.tier.charAt(0).toUpperCase() + appState.tier.slice(1);
+function renderTotals() {
+  const { oneTimeTotal, monthlyTotal, timelineTotal, invoiceTotal } = computeTotals();
+  qs("#oneTimeTotal").textContent = formatMoney(oneTimeTotal);
+  qs("#monthlyTotal").textContent = formatMonthly(monthlyTotal);
+  qs("#timelineTotal").textContent = `${timelineTotal || 0} days`;
+  qs("#invoiceTotal").textContent = formatMoney(invoiceTotal);
 
-  const termsMap = {
-    "50-50": "50% / 50%",
-    "40-40-20": "40% / 40% / 20%",
-    monthly: "Monthly",
+  const button = qs("#bookCallBtn");
+  button.disabled = invoiceTotal === 0;
+}
+
+function renderPayload() {
+  const { items, oneTimeTotal, monthlyTotal, timelineTotal, invoiceTotal } = computeTotals();
+
+  const payload = {
+    buildId: qs("#buildId").textContent.replace("Build ID: ", ""),
+    source: "spacekayak-storefront",
+    selectedItems: items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      quantity: item.qty,
+      category: item.category,
+      pricingModel: item.kind,
+      unitPrice: item.price,
+      timelineDays: item.days,
+    })),
+    totals: {
+      oneTime: oneTimeTotal,
+      monthly: monthlyTotal,
+      estimatedTimelineDays: timelineTotal,
+      projectedFirstInvoice: invoiceTotal,
+    },
+    status: state.lastBookedAt ? "call-booked" : "draft",
   };
-  qs("#summaryTerms").textContent = termsMap[appState.paymentTerms];
 
-  const chips = qs("#impactChips");
-  chips.innerHTML = "";
-
-  const chipData = [
-    { cls: "cost", text: `Tier: ${qs("#summaryTier").textContent}` },
-    { cls: "time", text: `${result.totalDays} day timeline` },
-    { cls: "cost", text: `${result.addons.length} add-on${result.addons.length === 1 ? "" : "s"}` },
-  ];
-
-  chipData.forEach((chip) => {
-    const node = document.createElement("span");
-    node.className = `chip ${chip.cls}`;
-    node.textContent = chip.text;
-    chips.appendChild(node);
-  });
+  qs("#backendPayload").textContent = JSON.stringify(payload, null, 2);
 }
 
-function renderMode() {
-  const storyBtn = qs("#storyModeBtn");
-  const builderBtn = qs("#builderModeBtn");
-
-  storyBtn.classList.toggle("active", appState.mode === "story");
-  builderBtn.classList.toggle("active", appState.mode === "builder");
-
-  const status = qs("#proposalStatus");
-  if (appState.mode === "builder") {
-    status.textContent = "Negotiation";
-    status.style.color = "#ffd37d";
-  } else {
-    status.textContent = "Sent";
-    status.style.color = "#2cb67d";
-  }
+function openModal() {
+  qs("#bookingModal").classList.remove("hidden");
 }
 
-function renderScreen() {
-  qsa(".screen").forEach((screen) => {
-    const active = screen.getAttribute("data-screen") === appState.activeScreen;
-    screen.classList.toggle("active", active);
+function closeModal() {
+  qs("#bookingModal").classList.add("hidden");
+}
+
+function bindCoreEvents() {
+  qs("#bookCallBtn").addEventListener("click", openModal);
+  qs("#closeModalBtn").addEventListener("click", closeModal);
+  qs("#clearBtn").addEventListener("click", () => {
+    state.cart = {};
+    state.lastBookedAt = null;
+    qs("#buildId").textContent = `Build ID: ${nextBuildId()}`;
+    renderAll();
   });
 
-  qsa(".nav-link").forEach((btn) => {
-    const active = btn.getAttribute("data-screen") === appState.activeScreen;
-    btn.classList.toggle("active", active);
+  qs("#bookingModal").addEventListener("click", (event) => {
+    if (event.target.id === "bookingModal") {
+      closeModal();
+    }
+  });
+
+  qs("#bookingForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const company = formData.get("company");
+    const date = formData.get("date");
+    const time = formData.get("time");
+
+    state.lastBookedAt = new Date().toISOString();
+
+    const success = qs("#bookingSuccess");
+    success.classList.remove("hidden");
+    success.textContent = `Call requested for ${name} (${company}) on ${date} at ${time}. Build card + estimate is attached for ${email}.`;
+
+    event.target.reset();
+    renderPayload();
   });
 }
 
 function renderAll() {
-  const result = recalc();
-  renderMode();
-  renderScreen();
-  renderAddons();
-  renderTimeline(result);
-  renderCommercials(result);
-  renderSummary(result);
+  renderCategoryFilters();
+  renderServices();
+  renderSelected();
+  renderTotals();
+  renderPayload();
 }
 
-function bindEvents() {
-  qs("#storyModeBtn").addEventListener("click", () => {
-    appState.mode = "story";
-    renderAll();
-  });
-
-  qs("#builderModeBtn").addEventListener("click", () => {
-    appState.mode = "builder";
-    renderAll();
-  });
-
-  qsa(".nav-link").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      appState.activeScreen = btn.getAttribute("data-screen");
-      renderAll();
-    });
-  });
-
-  qsa(".tier-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      appState.tier = btn.getAttribute("data-tier");
-      qsa(".tier-btn").forEach((candidate) => {
-        candidate.classList.toggle("active", candidate === btn);
-      });
-      renderAll();
-    });
-  });
-
-  qs("#discountInput").addEventListener("input", (event) => {
-    appState.discountPct = Number(event.target.value);
-    qs("#discountLabel").textContent = `${appState.discountPct}%`;
-    renderAll();
-  });
-
-  qs("#paymentTerms").addEventListener("change", (event) => {
-    appState.paymentTerms = event.target.value;
-    renderAll();
-  });
+function init() {
+  qs("#buildId").textContent = `Build ID: ${nextBuildId()}`;
+  bindCoreEvents();
+  renderAll();
 }
 
-bindEvents();
-renderAll();
+init();
