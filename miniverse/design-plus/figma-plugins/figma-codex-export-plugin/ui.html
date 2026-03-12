@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #ffffff;
+        --text: #1f2328;
+        --surface: #f6f8fa;
+        --border: #d0d7de;
+        --button-bg: #f3f4f6;
+        --button-text: #111827;
+        --button-disabled-bg: #e5e7eb;
+        --button-disabled-text: #6b7280;
+        --primary-bg: #0b6bff;
+        --primary-text: #ffffff;
+        --primary-disabled-bg: #8bb7ff;
+        --primary-disabled-text: #eef5ff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1f1f22;
+          --text: #f5f7fa;
+          --surface: #111216;
+          --border: #4b5563;
+          --button-bg: #2b313a;
+          --button-text: #f9fafb;
+          --button-disabled-bg: #2a2f36;
+          --button-disabled-text: #8b96a7;
+          --primary-bg: #2f7cff;
+          --primary-text: #ffffff;
+          --primary-disabled-bg: #3f5f96;
+          --primary-disabled-text: #dbe8ff;
+        }
+      }
+      body {
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        margin: 0;
+        padding: 12px;
+        font-size: 12px;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .row { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+      button {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+        background: var(--button-bg);
+        color: var(--button-text);
+      }
+      button.primary {
+        background: var(--primary-bg);
+        border-color: var(--primary-bg);
+        color: var(--primary-text);
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 1;
+        background: var(--button-disabled-bg);
+        color: var(--button-disabled-text);
+        border-color: var(--border);
+      }
+      button.primary:disabled {
+        background: var(--primary-disabled-bg);
+        border-color: var(--primary-disabled-bg);
+        color: var(--primary-disabled-text);
+      }
+      .meta {
+        margin: 8px 0;
+        padding: 8px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        white-space: pre-wrap;
+        background: var(--surface);
+      }
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px;
+        margin-bottom: 8px;
+        background: var(--surface);
+      }
+      .panel-title { font-weight: 600; margin-bottom: 8px; }
+      .pages {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 4px;
+        max-height: 120px;
+        overflow: auto;
+      }
+      label.page-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      textarea {
+        width: 100%;
+        height: 260px;
+        box-sizing: border-box;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 11px;
+        background: var(--surface);
+        color: var(--text);
+      }
+      .status { margin-bottom: 8px; min-height: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="panel-title">Page Scope</div>
+      <div class="row">
+        <button id="select-current">Current page</button>
+        <button id="select-all">All pages</button>
+        <button id="refresh-pages">Refresh pages</button>
+      </div>
+      <div id="pages" class="pages"></div>
+    </div>
+
+    <div class="row">
+      <button id="export" class="primary">Export</button>
+      <button id="copy">Copy JSON</button>
+      <button id="download">Download</button>
+      <button id="close">Close</button>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="summary" class="meta">No export yet.</div>
+    <textarea id="output" placeholder="Click Export to generate Codex-ready JSON..."></textarea>
+
+    <script>
+      const statusEl = document.getElementById("status");
+      const summaryEl = document.getElementById("summary");
+      const outputEl = document.getElementById("output");
+      const pagesEl = document.getElementById("pages");
+
+      let pages = [];
+
+      function setStatus(msg) {
+        statusEl.textContent = msg;
+      }
+
+      function renderSummary(summary) {
+        if (!summary) {
+          summaryEl.textContent = "No export yet.";
+          return;
+        }
+        summaryEl.textContent =
+`Summary
+- Selected pages: ${summary.selectedPages}
+- Variable collections: ${summary.variableCollections}
+- Variables: ${summary.variables}
+- Paint styles: ${summary.paintStyles}
+- Text styles: ${summary.textStyles}
+- Effect styles: ${summary.effectStyles}
+- Grid styles: ${summary.gridStyles}
+- Components: ${summary.components}
+- Component sets: ${summary.componentSets}
+- Type families: ${summary.typeFamilies}
+- Palette colors: ${summary.paletteColors}`;
+      }
+
+      function renderPages() {
+        pagesEl.innerHTML = "";
+        if (!pages.length) {
+          pagesEl.textContent = "No pages found.";
+          return;
+        }
+
+        for (const p of pages) {
+          const label = document.createElement("label");
+          label.className = "page-item";
+
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.name = "page";
+          input.value = p.id;
+          input.checked = !!p.current;
+
+          const text = document.createElement("span");
+          text.textContent = p.current ? `${p.name} (current)` : p.name;
+
+          label.appendChild(input);
+          label.appendChild(text);
+          pagesEl.appendChild(label);
+        }
+      }
+
+      function selectedPageIds() {
+        return [...document.querySelectorAll('input[name="page"]:checked')].map(
+          (el) => el.value
+        );
+      }
+
+      function setPageSelection(mode) {
+        const boxes = [...document.querySelectorAll('input[name="page"]')];
+        if (!boxes.length) return;
+
+        if (mode === "all") {
+          boxes.forEach((b) => (b.checked = true));
+          return;
+        }
+
+        if (mode === "current") {
+          const currentIds = pages.filter((p) => p.current).map((p) => p.id);
+          boxes.forEach((b) => (b.checked = currentIds.includes(b.value)));
+        }
+      }
+
+      document.getElementById("refresh-pages").onclick = () => {
+        parent.postMessage({ pluginMessage: { type: "request-pages" } }, "*");
+      };
+
+      document.getElementById("select-all").onclick = () => setPageSelection("all");
+      document.getElementById("select-current").onclick = () => setPageSelection("current");
+
+      document.getElementById("export").onclick = () => {
+        const ids = selectedPageIds();
+        if (!ids.length) {
+          setStatus("Select at least one page.");
+          return;
+        }
+
+        setStatus("Exporting...");
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "export",
+              options: { selectedPageIds: ids }
+            }
+          },
+          "*"
+        );
+      };
+
+      document.getElementById("copy").onclick = async () => {
+        const text = outputEl.value;
+        if (!text) {
+          setStatus("Nothing to copy.");
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(text);
+          setStatus("Copied JSON to clipboard.");
+        } catch (e) {
+          setStatus("Clipboard permission denied. Copy manually.");
+        }
+      };
+
+      document.getElementById("download").onclick = () => {
+        const text = outputEl.value;
+        if (!text) {
+          setStatus("Nothing to download.");
+          return;
+        }
+        const blob = new Blob([text], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "codex-design-export.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        setStatus("Downloaded codex-design-export.json");
+      };
+
+      document.getElementById("close").onclick = () => {
+        parent.postMessage({ pluginMessage: { type: "close" } }, "*");
+      };
+
+      window.onmessage = (event) => {
+        const msg = event.data.pluginMessage;
+        if (!msg) return;
+
+        if (msg.type === "pages") {
+          pages = msg.pages || [];
+          renderPages();
+          return;
+        }
+
+        if (msg.type === "export-result") {
+          if (msg.ok) {
+            outputEl.value = msg.json;
+            renderSummary(msg.summary);
+            setStatus("Export complete.");
+          } else {
+            setStatus(`Export failed: ${msg.error}`);
+          }
+        }
+      };
+
+      parent.postMessage({ pluginMessage: { type: "request-pages" } }, "*");
+    </script>
+  </body>
+</html>

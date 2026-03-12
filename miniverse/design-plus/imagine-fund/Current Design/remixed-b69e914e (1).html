@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imagine Fund — Sanctuary Parc</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+::selection{background:#2A7A5B;color:#fff}
+:root{
+  --white:#FFFFFF;--off:#FAFAF8;--black:#111;--accent:#2A7A5B;--accent-light:#E8F5EE;--grey:#888;
+  --border:#E8E5E0;--card:#F6F5F2;--navy:#111114;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --display:'Cormorant',serif;
+  --sans:'DM Sans',-apple-system,system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{font-size:16px;scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);color:var(--black);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 clamp(20px,4vw,48px);height:56px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.04)}
+.nl{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.nl sup{font-size:.38rem;color:var(--accent);vertical-align:super;margin-left:1px}
+.nr{display:flex;align-items:center;gap:24px}
+.nr a{font-family:var(--sans);font-size:.68rem;letter-spacing:.02em;color:var(--grey);text-decoration:none;transition:color .2s}
+.nr a:hover{color:var(--black)}
+.nb{font-family:var(--mono)!important;font-size:.6rem!important;letter-spacing:.05em!important;text-transform:uppercase;padding:6px 14px;background:var(--black);color:#fff!important;border-radius:3px;transition:opacity .2s}
+.nb:hover{opacity:.85}
+
+/* LAYOUT */
+.w{max-width:920px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+section{padding:88px 0}
+section+section{border-top:1px solid var(--border)}
+.ey{font-family:var(--mono);font-size:.56rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.h2{font-family:var(--mono);font-weight:400;font-size:clamp(1.1rem,1.8vw,1.3rem);line-height:1.4;max-width:600px;margin-bottom:28px;letter-spacing:-.01em}
+.h2 em{font-style:italic;font-family:var(--display);font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:400;line-height:1}
+.p{font-family:var(--sans);font-size:.88rem;line-height:1.78;color:#555;max-width:540px}
+.p+.p{margin-top:14px}
+.p em{font-style:italic;color:var(--black)}
+.gl{width:32px;height:1px;background:var(--accent);margin-bottom:28px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:56px}
+.hero-tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;opacity:0;animation:up .7s .15s var(--ease) forwards}
+.hero-h{font-family:var(--display);font-weight:300;font-size:clamp(2.2rem,4.4vw,3.4rem);line-height:1.08;max-width:580px;margin-bottom:24px;opacity:0;animation:up .8s .3s var(--ease) forwards}
+.hero-h em{font-style:italic;font-weight:400}
+.hero-p{font-family:var(--sans);font-size:.95rem;line-height:1.75;color:var(--grey);max-width:460px;margin-bottom:32px;opacity:0;animation:up .8s .5s var(--ease) forwards}
+.hero-rule{width:32px;height:1px;background:var(--accent);margin-bottom:20px;opacity:0;animation:up .6s .65s var(--ease) forwards}
+.hero-sig{opacity:0;animation:up .6s .75s var(--ease) forwards}
+.hero-name{font-family:var(--display);font-size:1.3rem;font-style:italic}
+.hero-title{font-family:var(--sans);font-size:.68rem;color:var(--grey);margin-top:2px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:36px 0}
+.st{padding:18px 0;border-top:1px solid var(--border)}
+.st-n{font-family:var(--display);font-size:1.9rem;font-weight:300;line-height:1;margin-bottom:3px}
+.st-l{font-family:var(--sans);font-size:.58rem;letter-spacing:.02em;color:var(--grey);text-transform:uppercase}
+
+/* GRIDS */
+.grid{display:grid;gap:10px;margin-top:28px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+.c{background:var(--card);border-radius:6px;padding:22px;border:1px solid rgba(0,0,0,.03);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.c:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.c-ey{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.c-t{font-family:var(--mono);font-size:.85rem;font-weight:500;line-height:1.3;margin-bottom:5px}
+.c-b{font-family:var(--sans);font-size:.78rem;line-height:1.55;color:var(--grey)}
+.c-n{font-family:var(--display);font-size:1.8rem;font-weight:300;line-height:1;margin-bottom:3px}
+.c-nl{font-family:var(--mono);font-size:.56rem;letter-spacing:.03em;text-transform:uppercase;color:var(--grey)}
+.c-q{font-family:var(--serif);font-style:italic;font-size:.85rem;line-height:1.6;color:#555;padding-left:13px;border-left:1.5px solid var(--accent)}
+.c-qa{font-family:var(--sans);font-size:.6rem;color:var(--grey);margin-top:7px;font-style:normal}
+
+/* PILLS & LOGOS */
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.pill{font-family:var(--sans);font-size:.52rem;letter-spacing:.02em;padding:3px 8px;border:1px solid var(--border);border-radius:3px;color:var(--grey);text-transform:uppercase}
+.lg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.lp{font-family:var(--sans);font-size:.56rem;font-weight:500;letter-spacing:.01em;padding:5px 10px;background:var(--card);border-radius:4px;color:#444;border:1px solid rgba(0,0,0,.04)}
+.lp.hot{background:#111;color:#fff;border-color:#111}
+
+/* FLOORS */
+.floors{display:grid;grid-template-columns:repeat(3,1fr);margin:28px 0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.fl{padding:24px;border-right:1px solid var(--border)}
+.fl:last-child{border-right:none}
+.fl-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.fl-t{font-family:var(--mono);font-size:.9rem;font-weight:500;margin-bottom:5px}
+.fl-b{font-family:var(--sans);font-size:.76rem;line-height:1.5;color:var(--grey)}
+
+/* TIMELINE */
+.tl{margin:28px 0}
+.tl-r{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
+.tl-d{font-family:var(--mono);font-size:.66rem;color:var(--accent);font-weight:500}
+.tl-t{font-family:var(--sans);font-size:.85rem;line-height:1.5;color:#555}
+
+/* RISKS */
+.risks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.risk{padding:18px;border:1px solid var(--border);border-radius:5px}
+.risk h4{font-family:var(--mono);font-size:.8rem;font-weight:500;margin-bottom:4px}
+.risk p{font-family:var(--sans);font-size:.76rem;line-height:1.5;color:var(--grey)}
+
+/* TABLES */
+.tt{width:100%;border-collapse:collapse;margin-top:8px}
+.tt td{padding:9px 0;font-size:.85rem}
+.tt td:first-child{font-family:var(--sans);font-size:.66rem;color:var(--grey);width:130px}
+.tt td:last-child{font-weight:500}
+.tt tr{border-bottom:1px solid var(--border)}
+.tt tr:last-child{border-bottom:none}
+
+/* ARCHITECTURE */
+.arch{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:32px 0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.arch-c{background:var(--white);padding:20px;text-align:center}
+.arch-icon{font-family:var(--display);font-size:1.5rem;font-weight:300;color:var(--accent);margin-bottom:6px}
+.arch-t{font-family:var(--mono);font-size:.82rem;font-weight:500;margin-bottom:4px}
+.arch-b{font-family:var(--sans);font-size:.56rem;color:var(--grey);line-height:1.4;text-transform:uppercase;letter-spacing:.01em}
+
+/* ATTENTION STACK */
+.attn-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}
+.attn-s{padding:18px;background:var(--card);border-radius:6px;border:1px solid rgba(0,0,0,.03)}
+.attn-num{font-family:var(--mono);font-size:.5rem;color:var(--accent);font-weight:500;letter-spacing:.06em;margin-bottom:6px}
+.attn-t{font-family:var(--mono);font-size:.85rem;font-weight:500;margin-bottom:3px}
+.attn-b{font-family:var(--sans);font-size:.74rem;line-height:1.5;color:var(--grey)}
+
+/* CITATION MARKS */
+.cite-mark{font-family:var(--mono);font-size:.48rem;font-weight:500;color:var(--accent);background:var(--accent-light);padding:1px 5px;border-radius:2px;margin-left:2px;vertical-align:super;cursor:pointer;transition:background .2s,color .2s;text-decoration:none;display:inline}
+.cite-mark:hover{background:var(--accent);color:#fff}
+
+/* BATTLE CARD OVERLAY */
+.card-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s var(--ease);display:flex;align-items:center;justify-content:center;padding:20px}
+.card-overlay.open{opacity:1;pointer-events:auto}
+.battle-card{background:var(--white);border-radius:8px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;padding:32px;transform:translateY(20px) scale(.97);transition:transform .35s var(--ease);box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.card-overlay.open .battle-card{transform:translateY(0) scale(1)}
+.bc-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border:none;background:var(--card);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.7rem;color:var(--grey);transition:background .2s}
+.bc-close:hover{background:var(--border)}
+.bc-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.bc-title{font-family:var(--mono);font-size:1rem;font-weight:500;line-height:1.2;margin-bottom:14px}
+.bc-body{font-family:var(--sans);font-size:.84rem;line-height:1.7;color:#555}
+.bc-body p{margin-bottom:12px}
+.bc-body p:last-child{margin-bottom:0}
+.bc-body em{font-style:italic;color:var(--black)}
+.bc-body strong{font-weight:600;color:var(--black)}
+.bc-pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:14px}
+.bc-pill{font-family:var(--sans);font-size:.48rem;letter-spacing:.02em;padding:3px 7px;border:1px solid var(--border);border-radius:3px;color:var(--grey);text-transform:uppercase}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+
+/* CLOSE */
+.close{min-height:56vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:88px 40px;background:var(--navy);color:#fff}
+.close h2{font-family:var(--mono);font-weight:400;font-size:clamp(1rem,1.8vw,1.3rem);line-height:1.4;max-width:480px;margin-bottom:18px}
+.close h2 em{font-style:italic;font-family:var(--display);font-size:clamp(1.6rem,2.8vw,2.2rem);color:var(--accent)}
+.close p{font-family:var(--sans);font-size:.88rem;line-height:1.6;color:rgba(255,255,255,.4);max-width:400px}
+.close-cta{margin-top:36px;font-family:var(--mono);font-size:.85rem;color:var(--accent);line-height:1.6}
+.close-contact{margin-top:28px;font-family:var(--sans);font-size:.65rem;color:rgba(255,255,255,.2)}
+.close-contact a{color:rgba(255,255,255,.35);text-decoration:none}
+
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.03);padding:24px 40px;display:flex;justify-content:space-between;font-family:var(--sans);font-size:.58rem;color:rgba(255,255,255,.12)}
+
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.r{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.r.v{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .nr a:not(.nb){display:none}
+  .w{padding:0 20px}
+  section{padding:56px 0}
+  .stats{grid-template-columns:1fr 1fr}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .floors,.arch,.attn-stack{grid-template-columns:1fr}
+  .fl{border-right:none;border-bottom:1px solid var(--border)}
+  .fl:last-child{border-bottom:none}
+  .risks{grid-template-columns:1fr}
+  .tl-r{grid-template-columns:90px 1fr}
+  .close{padding:56px 20px}
+  .two-col{grid-template-columns:1fr !important}
+  footer{padding:18px 20px;flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nl">Imagine Fund<sup>&copy;</sup></div>
+  <div class="nr">
+    <a href="#system">The System</a>
+    <a href="#fund">The Fund</a>
+    <a href="#attn">Attn Co</a>
+    <a href="#">Know Your GP</a>
+    <a href="#close" class="nb">Get in Touch</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="w">
+    <div class="hero-tag">Confidential LP Memo &middot; February 2026</div>
+    <h1 class="hero-h"><em>Imagine Fund</em></h1>
+    <p class="hero-p">The world&rsquo;s first creative VC. We pair capital with a full production stack &mdash; brand, narrative, launch, distribution &mdash; so founders ship faster and raise stronger. $10M. ~20 companies. 24 months.</p>
+    <div class="hero-rule"></div>
+    <div class="hero-sig">
+      <div class="hero-name">Paul Finney</div>
+      <div class="hero-title">Founder &middot; Sanctuary Parc &middot; Spacekayak</div>
+    </div>
+  </div>
+</section>
+
+<div class="w">
+
+<!-- 01 FOUNDER -->
+<section id="who">
+  <div class="ey r">01 &mdash; The Founder</div>
+  <h2 class="h2 r">A decade of creative infrastructure <em>before the cheque</em></h2>
+  <div class="gl r"></div>
+  <p class="p r">Spacekayak is a 20-person creative practice. Early creative partners for Emergent, Composio, Sentient AI, Nerve AI (now acquired by OpenAI), Sarvam AI, and IAIRO.<span class="cite-mark" data-card="sk-portfolio">1</span> We built the brand for BFI &mdash; Vitalik Buterin and Sandeep Nailwal&rsquo;s blockchain-for-public-health initiative. In Europe, we&rsquo;re the creative arm for Vanagon Ventures and Flog Ventures.<span class="cite-mark" data-card="sk-europe">2</span></p>
+  <div class="stats r">
+    <div class="st"><div class="st-n">80+</div><div class="st-l">Ventures Shaped</div></div>
+    <div class="st"><div class="st-n">$1B+</div><div class="st-l">Raised Collectively</div></div>
+    <div class="st"><div class="st-n">20</div><div class="st-l">Person Team</div></div>
+    <div class="st"><div class="st-n">4+</div><div class="st-l">Years</div></div>
+  </div>
+  <div class="r" style="margin-top:20px">
+    <div class="c-ey">Companies shaped by this team</div>
+    <div class="lg">
+      <span class="lp hot">Emergent</span>
+      <span class="lp hot">Composio</span>
+      <span class="lp hot">Sentient AI</span>
+      <span class="lp hot">Nerve AI</span>
+      <span class="lp hot">Sarvam AI</span>
+      <span class="lp">BFI</span>
+      <span class="lp">IAIRO</span>
+      <span class="lp">Qbeast</span>
+      <span class="lp">Echelon AI</span>
+      <span class="lp">Extend AI</span>
+      <span class="lp">Anomaly</span>
+      <span class="lp">Polygon</span>
+      <span class="lp">Jupiter</span>
+      <span class="lp">Induced AI</span>
+      <span class="lp">Bench AI</span>
+      <span class="lp">Hyperverge</span>
+      <span class="lp">Bridgetown Research</span>
+      <span class="lp">Cursor India</span>
+    </div>
+  </div>
+  <div class="grid g2 r" style="margin-top:16px">
+    <div class="c"><div class="c-q">They challenge and collaborate. They get the business constraints but never compromise on creative quality. That balance is rare.<div class="c-qa">Ganesh Subramanian &middot; CEO, Stylumia</div></div></div>
+    <div class="c"><div class="c-q">Spacekayak translates the vision of frontier technology companies into visual storylines that resonate equally with customers and investors.<div class="c-qa">Sandro Stark &middot; GP, Vanagon Ventures</div></div></div>
+  </div>
+  <div style="margin-top:16px" class="r">
+    <div class="c-ey">VCs who backed companies shaped by this team</div>
+    <div class="pills">
+      <span class="pill">Sequoia</span><span class="pill">a16z Crypto</span><span class="pill">Tiger Global</span><span class="pill">Accel</span><span class="pill">Lightspeed</span><span class="pill">Founders Fund</span><span class="pill">Khosla Ventures</span><span class="pill">SoftBank</span><span class="pill">Polychain</span><span class="pill">Pantera</span><span class="pill">Framework</span><span class="pill">Electric Capital</span><span class="pill">Vanagon</span><span class="pill">Flog Ventures</span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 SYSTEM -->
+<section id="system">
+  <div class="ey r">02 &mdash; The System</div>
+  <h2 class="h2 r">Four interlocking pieces. <em>One machine.</em></h2>
+  <div class="gl r"></div>
+  <p class="p r">Imagine Fund is not a cheque with services bolted on. It&rsquo;s a single integrated system where capital, infrastructure, programming, and distribution reinforce each other.<span class="cite-mark" data-card="system-why">3</span> Every piece makes the others stronger.</p>
+  <div class="arch r">
+    <div class="arch-c"><div class="arch-icon">I</div><div class="arch-t">Imagine Fund</div><div class="arch-b">The Capital</div></div>
+    <div class="arch-c"><div class="arch-icon">S</div><div class="arch-t">Sanctuary Parc</div><div class="arch-b">The Infrastructure</div></div>
+    <div class="arch-c"><div class="arch-icon">R</div><div class="arch-t">Renaissance</div><div class="arch-b">The Program</div></div>
+    <div class="arch-c"><div class="arch-icon">A</div><div class="arch-t">Attn Co</div><div class="arch-b">The Distribution</div></div>
+  </div>
+</section>
+
+<!-- 03 FUND -->
+<section id="fund">
+  <div class="ey r">03 &mdash; Imagine Fund</div>
+  <h2 class="h2 r">$10M &mdash; one raise, one race. <em>Creative capital.</em></h2>
+  <div class="gl r"></div>
+  <p class="p r">One raise for Sanctuary. Imagine Fund is the investment vehicle inside it. 10% management fee upfront for two years covers building operations, staff, legal, programs, and events. The rest goes into companies through the Renaissance program.<span class="cite-mark" data-card="fund-structure">4</span></p>
+  <div class="grid g2 r" style="margin-top:24px">
+    <div class="c" style="text-align:center"><div class="c-n">$9M</div><div class="c-nl">Deployable Capital</div><div class="c-b" style="margin-top:5px">~20 investments via Imagine Fund &middot; Renaissance incubation</div></div>
+    <div class="c" style="text-align:center"><div class="c-n">$1M</div><div class="c-nl">Mgmt Fee (10% &times; 2yr)</div><div class="c-b" style="margin-top:5px">Sanctuary ops, building, staff, legal, structuring, programs, events</div></div>
+  </div>
+  <div style="margin-top:28px" class="two-col r">
+    <div>
+      <div class="c-ey">Fund Terms</div>
+      <table class="tt">
+        <tr><td>Total Raise</td><td>$10,000,000</td></tr>
+        <tr><td>Vehicle</td><td>Imagine Fund (inside Sanctuary)</td></tr>
+        <tr><td>Mgmt Fee</td><td>10% upfront for 2 years ($1M)</td></tr>
+        <tr><td>Deployment</td><td>~$9M across ~20 companies</td></tr>
+        <tr><td>Check Range</td><td>$100K &ndash; $500K</td></tr>
+        <tr><td>Min LP</td><td>$100,000</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="c-ey">$1M Management Fee Covers</div>
+      <table class="tt">
+        <tr><td>Sanctuary</td><td>Building ops, team, Renaissance programming</td></tr>
+        <tr><td>Legal</td><td>Fund structuring, compliance, entity setup</td></tr>
+        <tr><td>Programs</td><td>Events, sprints, founder dinners, Drop Nights</td></tr>
+        <tr><td>SF Corridor</td><td>GTM logistics, founder sprint coordination</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 04 SANCTUARY -->
+<section id="parc">
+  <div class="ey r">04 &mdash; Sanctuary Parc</div>
+  <h2 class="h2 r">An <em>operating system</em>, not a coworking space</h2>
+  <div class="gl r"></div>
+  <p class="p r">Named for Xerox PARC. A building in Koramangala, Bangalore. Ten-year lease. Three floors. One loop: build, design, launch.<span class="cite-mark" data-card="sanctuary-vision">5</span></p>
+  <div class="floors r">
+    <div class="fl"><div class="fl-tag">Top</div><div class="fl-t">Build</div><div class="fl-b">Founders and engineers in density. Speed becomes contagious.</div></div>
+    <div class="fl"><div class="fl-tag">Middle</div><div class="fl-t">Design</div><div class="fl-b">The taste engine. Ideas get form, identity, conviction.</div></div>
+    <div class="fl"><div class="fl-tag">Ground</div><div class="fl-t">Launch</div><div class="fl-b">Attn Co production. The company becomes legible.</div></div>
+  </div>
+</section>
+
+<!-- 05 RENAISSANCE -->
+<section id="renaissance">
+  <div class="ey r">05 &mdash; Renaissance</div>
+  <h2 class="h2 r"><em>120 Days</em> from zero to launch</h2>
+  <div class="gl r"></div>
+  <p class="p r">Structured hours every week. Design, growth, creative direction, introductions. A schedule built around output, not advice.<span class="cite-mark" data-card="renaissance-how">6</span></p>
+  <div class="grid g4 r">
+    <div class="c"><div class="c-ey">Month 1</div><div class="c-t">Clarity</div><div class="c-b">Thesis, prototype, first user calls.</div></div>
+    <div class="c"><div class="c-ey">Month 2</div><div class="c-t">Product</div><div class="c-b">Core loop, design system, messaging.</div></div>
+    <div class="c"><div class="c-ey">Month 3</div><div class="c-t">Distribution</div><div class="c-b">Launch assets, Attn Co video, channel tests.</div></div>
+    <div class="c"><div class="c-ey">Month 4</div><div class="c-t">Momentum</div><div class="c-b">Public drop, pilots, GTM sprint.</div></div>
+  </div>
+  <p class="p r" style="margin-top:22px">24-hour build sprints. Drop Nights for public shipping. Founder dinners. The barrier to shipping is often emotional. A room where others are already moving makes it easier to start.</p>
+</section>
+
+<!-- 06 ATTN CO -->
+<section id="attn">
+  <div class="ey r">06 &mdash; Attn Co</div>
+  <h2 class="h2 r">The distribution arm. <em>Attention, engineered.</em></h2>
+  <div class="gl r"></div>
+  <p class="p r">a16z proved that a VC with a media engine changes the game. We&rsquo;re building the producer-VC model for the earliest stage: every Imagine Fund company gets professional video, founder-led narrative, and platform-native distribution as core infrastructure.<span class="cite-mark" data-card="attn-thesis">7</span></p>
+  <div class="stats r">
+    <div class="st"><div class="st-n">30M+</div><div class="st-l">Organic Views</div></div>
+    <div class="st"><div class="st-n">55+</div><div class="st-l">Videos Shipped</div></div>
+    <div class="st"><div class="st-n">8</div><div class="st-l">Sectors Covered</div></div>
+    <div class="st"><div class="st-n">2&ndash;3wk</div><div class="st-l">Concept to Ship</div></div>
+  </div>
+  <div class="c-ey r">The Attention Stack</div>
+  <div class="attn-stack r">
+    <div class="attn-s"><div class="attn-num">01</div><div class="attn-t">Capture</div><div class="attn-b">IRL &amp; launch films. Founder-led narrative that builds trust.</div></div>
+    <div class="attn-s"><div class="attn-num">02</div><div class="attn-t">Explain</div><div class="attn-b">Motion, 3D, product demos. Clarity and conviction.</div></div>
+    <div class="attn-s"><div class="attn-num">03</div><div class="attn-t">Multiply</div><div class="attn-b">AI-scaled content &amp; promos. One shoot, dozens of assets.</div></div>
+    <div class="attn-s"><div class="attn-num">04</div><div class="attn-t">Compound</div><div class="attn-b">Founder-led narratives &amp; distribution. Organic reach that compounds.</div></div>
+  </div>
+  <div class="c r" style="margin-top:16px">
+    <div class="c-ey">Case Study &middot; Emergent Labs</div>
+    <div class="c-b" style="margin-top:6px">Combined live-action founder footage with UI animation. Over 1M views. Significant increase in web traffic and conversions.<span class="cite-mark" data-card="emergent-case">8</span> <em style="color:var(--black)">Formula: founder-led narrative + product clarity + platform-native distribution.</em></div>
+  </div>
+  <div class="r" style="margin-top:14px">
+    <div class="c-ey">Sectors</div>
+    <div class="pills">
+      <span class="pill">AI</span><span class="pill">Fintech</span><span class="pill">Infra</span><span class="pill">Energy</span><span class="pill">Robotics</span><span class="pill">Agentic</span><span class="pill">Prosumer</span><span class="pill">SaaS</span>
+    </div>
+  </div>
+</section>
+
+<!-- 07 VISION -->
+<section id="vision">
+  <div class="ey r">07 &mdash; The Vision</div>
+  <h2 class="h2 r">Geography is not <em>destiny</em></h2>
+  <div class="gl r"></div>
+  <p class="p r">Only 5&ndash;10% of qualified Indian founders get the infrastructure to break out globally. The rest plateau from lack of leverage, not lack of ambition.<span class="cite-mark" data-card="india-corridor">9</span> Imagine Fund builds the corridor: engineering density in Bangalore, GTM in San Francisco, Attn Co distribution everywhere.</p>
+  <div class="stats r" style="margin-top:28px">
+    <div class="st"><div class="st-n">1/5th</div><div class="st-l">Cost of Ops</div></div>
+    <div class="st"><div class="st-n">7yr</div><div class="st-l">Runway vs 18mo</div></div>
+    <div class="st"><div class="st-n">15</div><div class="st-l">Engineers vs 3</div></div>
+    <div class="st"><div class="st-n">$10M</div><div class="st-l">Total Raise</div></div>
+  </div>
+</section>
+
+<!-- 08 FOUNDERS -->
+<section id="founders">
+  <div class="ey r">08 &mdash; Founder Radar</div>
+  <h2 class="h2 r">We optimise for <em>founders</em>, not ideas</h2>
+  <div class="gl r"></div>
+  <div class="grid g2 r">
+    <div class="c"><div class="c-t">Stealth Founder 1 &amp; 2</div><div class="c-b">Seasoned tech founders. Deep systems thinking and relentless execution.<span class="cite-mark" data-card="founder-1">10</span></div></div>
+    <div class="c"><div class="c-t">Stealth Founder 3</div><div class="c-b">Repeat founder. Potential unicorn trajectory. Navigated scale before. Choosing the right next hill.<span class="cite-mark" data-card="founder-2">11</span></div></div>
+    <div class="c"><div class="c-t">Stealth Founder 4</div><div class="c-b">Ex-unicorn. End-to-end fintech ecosystem knowledge. Rebuilding assumptions from first principles.<span class="cite-mark" data-card="founder-3">12</span></div></div>
+    <div class="c"><div class="c-t">Stealth Founder 5</div><div class="c-b">Growth at unicorn. Idea to pilots in weeks. Pure velocity. In an agentic era, pace is a moat.<span class="cite-mark" data-card="founder-4">13</span></div></div>
+  </div>
+</section>
+
+<!-- 09 DEPLOYMENT -->
+<section id="roadmap">
+  <div class="ey r">09 &mdash; Deployment</div>
+  <h2 class="h2 r">Start March. Close June. <em>Proof by winter.</em></h2>
+  <div class="gl r"></div>
+  <div class="tl r">
+    <div class="tl-r"><div class="tl-d">Mar 2026</div><div class="tl-t">Fundraise opens. Renaissance incubating.</div></div>
+    <div class="tl-r"><div class="tl-d">Jun 2026</div><div class="tl-t">Fund closes. First cheques deployed.</div></div>
+    <div class="tl-r"><div class="tl-d">Summer</div><div class="tl-t">3&ndash;4 investments. Attn Co production live.</div></div>
+    <div class="tl-r"><div class="tl-d">Winter</div><div class="tl-t">~6 investments. SF corridor pilot.</div></div>
+    <div class="tl-r"><div class="tl-d">24 Months</div><div class="tl-t">~20 investments complete. Fund I proof documented.</div></div>
+  </div>
+</section>
+
+<!-- 10 RETURNS -->
+<section id="returns">
+  <div class="ey r">10 &mdash; Return Model</div>
+  <h2 class="h2 r">Fund I proves the system. <em>Fund II scales it.</em></h2>
+  <div class="gl r"></div>
+  <div class="grid g3 r">
+    <div class="c" style="text-align:center"><div class="c-ey">Base</div><div class="c-n">3&times;</div><div class="c-b">1&ndash;2 modest exits from 20.</div></div>
+    <div class="c" style="text-align:center;border:1px solid var(--accent)"><div class="c-ey">Target</div><div class="c-n">5&ndash;8&times;</div><div class="c-b">One breakout. Several solid outcomes.</div></div>
+    <div class="c" style="text-align:center"><div class="c-ey">Outlier</div><div class="c-n">15&times;+</div><div class="c-b">Category-defining company.</div></div>
+  </div>
+  <p class="p r" style="margin-top:24px">Fund II target: $50M. After proof, after breakouts, after the corridor is real enough that LPs can walk through it.</p>
+</section>
+
+<!-- 11 RISKS -->
+<section id="risks">
+  <div class="ey r">11 &mdash; Honest Risks</div>
+  <h2 class="h2 r">Why you should <em>not</em> invest</h2>
+  <div class="gl r"></div>
+  <div class="risks r">
+    <div class="risk"><h4>First-time fund manager</h4><p>A decade of creative capital, but no prior fund track record. You&rsquo;re betting on the operator, not a spreadsheet.</p></div>
+    <div class="risk"><h4>VC cycles are compressing</h4><p>The traditional 10-year fund cycle may not apply. Markets move in ~2-year windows now. We might be early, late, or building for a cycle that doesn&rsquo;t exist yet.</p></div>
+    <div class="risk"><h4>The agentic future is uncharted</h4><p>Nobody has a playbook for what&rsquo;s coming. The companies we back may be building for a world that hasn&rsquo;t fully arrived. That&rsquo;s the bet.</p></div>
+    <div class="risk"><h4>Traditional startup-building may not work</h4><p>If AI collapses the cost of building software to near-zero, distribution, taste, and narrative become the moats &mdash; which is exactly our thesis, but it&rsquo;s unproven at fund scale.</p></div>
+    <div class="risk"><h4>Geography thesis is early</h4><p>The India&ndash;SF corridor exists as a pattern. Emergent, Composio, and others validate it. But nobody has packaged it as fund infrastructure before.</p></div>
+  </div>
+  <p class="p r" style="margin-top:20px">If these feel like dealbreakers, I respect that. If they feel like the kind of risk worth taking early &mdash; before the thesis is obvious &mdash; we should talk.</p>
+</section>
+
+</div>
+
+<!-- CLOSE -->
+<div class="close" id="close">
+  <div style="width:24px;height:1px;background:var(--accent);margin-bottom:28px"></div>
+  <h2 class="r"><em>Imagine Fund</em> is creative capital as infrastructure.</h2>
+  <p class="r">The earliest stage is where the highest-leverage work happens. Before startups exist. Before anyone else would bet.</p>
+  <p class="close-cta r">Builders. Filmmakers. Creatives.<br>Hackers. Designers. Dreamers.<br><em>Join us.</em></p>
+  <p class="close-contact r"><a href="mailto:p@spacekayak.xyz">p@spacekayak.xyz</a> &middot; spacekayak.xyz &middot; @sanctuaryparc</p>
+</div>
+
+<footer>
+  <div>Sanctuary Parc &copy; 2026</div>
+  <div>Confidential &middot; Not an offer to sell securities</div>
+</footer>
+
+<!-- BATTLE CARD OVERLAY -->
+<div class="card-overlay" id="overlay">
+  <div style="position:relative">
+    <div class="battle-card" id="battleCard">
+      <button class="bc-close" id="bcClose">&times;</button>
+      <div id="bcContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cards={
+"sk-portfolio":{
+  tag:"Portfolio · SpaceKayak",
+  title:"The Companies We Shaped",
+  body:`<p>SpaceKayak has been the early creative partner — brand, narrative, product design, 3D, motion, launch — for over 80 ventures at the minus-one-to-zero stage. These are companies building at the frontier of AI, infrastructure, and consumer technology.</p>
+  <p><strong>Emergent</strong> — AI infrastructure. Breakout launch video with 1M+ views. <strong>Composio</strong> — agentic tooling. <strong>Sentient AI</strong> — decentralized AI. <strong>Nerve AI</strong> — acquired by OpenAI. <strong>Sarvam AI</strong> — India's foundational model company. <strong>IAIRO</strong> — robotics. <strong>BFI</strong> — Vitalik Buterin and Sandeep Nailwal's blockchain-for-public-health initiative.</p>
+  <p>The VCs who backed these companies include Sequoia, a16z, Tiger Global, Accel, Lightspeed, Founders Fund, Khosla Ventures, and SoftBank. Over <strong>$1B raised collectively</strong> by companies touched by the SpaceKayak team.</p>`,
+  pills:["80+ Ventures","$1B+ Raised","Emergent","Sentient AI","Sarvam AI","Nerve AI","Composio"]
+},
+"sk-europe":{
+  tag:"Europe · Expansion",
+  title:"The European Creative Arm",
+  body:`<p>In the European deeptech ecosystem, SpaceKayak serves as the creative arm for <strong>Vanagon Ventures</strong> and <strong>Flog Ventures</strong> — two funds backing frontier technology companies across the continent.</p>
+  <p>This isn't consulting. It's embedded creative infrastructure. The same design system, narrative framework, and launch production that we run for Indian founders, deployed for European deeptech. This cross-geography practice is what makes the India–SF–Europe corridor real.</p>`,
+  pills:["Vanagon Ventures","Flog Ventures","European Deeptech","Cross-Border"]
+},
+"system-why":{
+  tag:"Architecture · Why It Works",
+  title:"Why Four Pieces, Not One",
+  body:`<p>Most venture funds write a cheque and offer introductions. Platform services are bolted on after the fact. Imagine Fund is architected differently: the capital, the building, the program, and the distribution arm are <em>designed as one system</em>.</p>
+  <p><strong>Imagine Fund</strong> provides capital. <strong>Sanctuary Parc</strong> provides the physical infrastructure and density. <strong>Renaissance</strong> provides the 120-day incubation structure. <strong>Attn Co</strong> provides the video production and distribution engine. Each piece generates deal flow, conviction, and leverage for the others.</p>
+  <p>The insight: at the earliest stage, the gap isn't capital — it's creative infrastructure. The ability to go from "I have an idea" to "investors are inbound" in 120 days. That requires all four pieces working in concert.</p>`,
+  pills:["Integrated","Capital + Infra","Renaissance","Attn Co","120 Days"]
+},
+"fund-structure":{
+  tag:"Fund Economics",
+  title:"One Raise, One Race",
+  body:`<p>This is not two separate fundraises. $10M goes into Sanctuary as a single raise. <strong>Imagine Fund</strong> is the investment vehicle inside Sanctuary that deploys capital into portfolio companies.</p>
+  <p><strong>10% management fee ($1M)</strong> is collected upfront for two years. This covers: Sanctuary building operations, staff, legal and structuring fees, Renaissance program costs, event logistics, SF corridor coordination, and all operational overhead.</p>
+  <p>The remaining <strong>~$9M</strong> is deployed as cheques into ~20 companies, all incubated through the Renaissance program at Sanctuary Parc. Every company receives the full production stack — brand, narrative, video, distribution — as part of the deal.</p>`,
+  pills:["$10M Total","10% Mgmt Fee","$9M Deployable","~20 Companies","$100K–$500K Checks"]
+},
+"sanctuary-vision":{
+  tag:"10-Year Vision",
+  title:"Sanctuary — The Infrastructure Play",
+  body:`<p>Sanctuary is not a coworking space. It's a ten-year infrastructure play. The first building is in Koramangala, Bangalore — three floors, ten-year lease, designed as a vertical loop: Build (top), Design (middle), Launch (ground).</p>
+  <p>The future vision: expand Sanctuary to multiple cities and dedicated verticals — media studios, bio labs, hardware workshops. Each node in the network becomes a density engine for founders building at the frontier.</p>
+  <p>Named for <strong>Xerox PARC</strong>, where the personal computer, laser printer, Ethernet, and GUI were all invented in a single building because the right people were in the right density. Sanctuary is that bet for India's builder generation.</p>`,
+  pills:["Koramangala","10-Year Lease","3 Floors","Multi-City Vision","Xerox PARC"]
+},
+"renaissance-how":{
+  tag:"Program · 120 Days",
+  title:"How Renaissance Works",
+  body:`<p>Renaissance is a 120-day structured incubation. Not a lecture series. Not office hours with advisors who don't ship. A schedule built around output.</p>
+  <p><strong>Month 1 (Clarity):</strong> Thesis sharpening, prototype, first user calls. <strong>Month 2 (Product):</strong> Core loop, design system, messaging. <strong>Month 3 (Distribution):</strong> Launch assets, Attn Co video production, channel testing. <strong>Month 4 (Momentum):</strong> Public drop, pilot customers, GTM sprint.</p>
+  <p>Woven through: 24-hour build sprints, Drop Nights for public shipping, founder dinners, and the emotional infrastructure of being around others who are already moving.</p>`,
+  pills:["120 Days","4 Phases","Build Sprints","Drop Nights","Founder Dinners"]
+},
+"attn-thesis":{
+  tag:"Distribution · Thesis",
+  title:"The Producer-VC Model",
+  body:`<p>a16z proved that a VC with a media engine changes the game — their podcasts, editorial, and conference infrastructure became a competitive moat. But that model operates at Series A and beyond.</p>
+  <p>Imagine Fund is building the producer-VC model for the <em>earliest stage</em>. Every portfolio company gets professional video production, founder-led narrative development, and platform-native distribution as core infrastructure — not a nice-to-have added in month six.</p>
+  <p>The SpaceKayak team has already shipped 55+ videos generating 30M+ organic views across 8 sectors. Attn Co is the evolution: a dedicated production arm embedded inside the fund, with a 2–3 week concept-to-ship cycle.</p>`,
+  pills:["a16z Model","Producer-VC","30M+ Views","55+ Videos","2–3 Weeks"]
+},
+"emergent-case":{
+  tag:"Case Study",
+  title:"Emergent Labs — 1M+ Views",
+  body:`<p>Emergent Labs is an AI infrastructure company. SpaceKayak partnered as the early creative team to build their launch presence from scratch.</p>
+  <p>The approach: combined live-action founder footage with UI animation and product demos. The result: <strong>over 1 million organic views</strong>, significant increases in web traffic and conversion rates, and positive investor feedback that directly influenced their fundraising momentum.</p>
+  <p><strong>The formula:</strong> founder-led narrative + product clarity + platform-native distribution. This is exactly what every Imagine Fund company will receive through Attn Co.</p>`,
+  pills:["1M+ Views","Live Action + UI","Founder-Led","Investor Signal","Launch Catalyst"]
+},
+"india-corridor":{
+  tag:"Thesis · Geography",
+  title:"The India–SF Corridor",
+  body:`<p>India produces world-class technical talent. But only 5–10% of qualified founders get the infrastructure to break out globally. The rest plateau — not from lack of ambition, but from lack of leverage: no narrative, no distribution, no GTM infrastructure in the markets that matter.</p>
+  <p>The cost advantage is real: <strong>1/5th the operational cost</strong> of a US-based startup. That means a team that would survive 18 months in SF gets <strong>7 years of runway</strong> in Bangalore. 3 engineers becomes 15. The math is brutal in their favor.</p>
+  <p>Emergent, Composio, Sarvam AI — these companies validate the pattern. Imagine Fund packages it as fund infrastructure: engineering density in Bangalore, GTM in San Francisco, Attn Co distribution everywhere.</p>`,
+  pills:["1/5th Cost","7yr Runway","15 vs 3 Engineers","BLR → SF","Distribution"]
+},
+"founder-1":{
+  tag:"Pipeline · Stealth",
+  title:"Stealth Founders 1 & 2 — Seasoned Tech",
+  body:`<p>Two seasoned technology founders with experience at global-scale companies. Deep systems thinking and a track record of shipping production-grade products. They understand the infrastructure layer and they execute relentlessly.</p>
+  <p>Currently exploring agentic B2B finance — a space where technical depth and domain knowledge converge. The kind of founders who don't need to be told what to build. They need creative infrastructure to make the world pay attention.</p>`,
+  pills:["Seasoned Founders","B2B Finance","Agentic","Systems Thinkers"]
+},
+"founder-2":{
+  tag:"Pipeline · Stealth",
+  title:"Stealth Founder 3 — Potential Unicorn",
+  body:`<p>Repeat founder who has navigated scale before. The kind of operator who has seen the full lifecycle — building, fundraising, hiring, firing, pivoting, and exiting. Now choosing the right next hill with the benefit of hard-won pattern recognition.</p>
+  <p>The trajectory suggests potential unicorn-scale ambition. The timing is deliberate. What they need isn't capital — it's the creative and distribution infrastructure to launch with maximum leverage.</p>`,
+  pills:["Repeat Founder","Scale Experience","Unicorn Potential","Deliberate Timing"]
+},
+"founder-3":{
+  tag:"Pipeline · Stealth",
+  title:"Stealth Founder 4 — Ex-Unicorn Fintech",
+  body:`<p>Senior fintech operator from a unicorn-scale company. End-to-end ecosystem knowledge across payments, lending, and financial infrastructure. The rare combination of domain depth and first-principles thinking.</p>
+  <p>Now rebuilding assumptions from scratch — questioning everything they learned at scale and reconstructing a thesis for what fintech looks like in an agentic, AI-first world.</p>`,
+  pills:["Ex-Unicorn","Fintech","End-to-End","First Principles"]
+},
+"founder-4":{
+  tag:"Pipeline · Stealth",
+  title:"Stealth Founder 5 — Growth at Unicorn",
+  body:`<p>Growth operator from a unicorn. The kind of person who goes from idea to pilots in weeks. Pure velocity. In an agentic era where the cost of building approaches zero, pace becomes the primary moat.</p>
+  <p>Speed isn't just a personality trait — it's a compounding advantage. Every week of iteration is a week of learning that competitors don't have. Imagine Fund backs founders who ship first and optimize second.</p>`,
+  pills:["Growth","Unicorn","Velocity","Agentic Era","Ship First"]
+}
+};
+
+// CARD LOGIC
+const overlay=document.getElementById('overlay');
+const bcContent=document.getElementById('bcContent');
+const bcClose=document.getElementById('bcClose');
+
+document.querySelectorAll('.cite-mark').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.preventDefault();
+    const key=el.dataset.card;
+    const c=cards[key];
+    if(!c)return;
+    let html=`<div class="bc-tag">${c.tag}</div><div class="bc-title">${c.title}</div><div class="bc-body">${c.body}</div>`;
+    if(c.pills){
+      html+=`<div class="bc-pills">${c.pills.map(p=>`<span class="bc-pill">${p}</span>`).join('')}</div>`;
+    }
+    bcContent.innerHTML=html;
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+
+bcClose.addEventListener('click',()=>{overlay.classList.remove('open');document.body.style.overflow='';});
+overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('open');document.body.style.overflow='';}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay.classList.remove('open');document.body.style.overflow='';}});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')})
+},{threshold:.08,rootMargin:'0px 0px -16px 0px'});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

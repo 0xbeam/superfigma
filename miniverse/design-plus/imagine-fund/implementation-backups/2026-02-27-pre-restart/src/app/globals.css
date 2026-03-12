@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors — Swiss Editorial Minimalist Aesthetic */
+  --color-bg: #F9F8F5;
+  /* Warm cream background */
+  --color-surface: #FFFFFF;
+  /* Pure white for contrast areas */
+  --color-text: #1C1C19;
+  /* Sharp charcoal, near black */
+  --color-text-secondary: #7A7A75;
+  /* Warm grey secondary */
+  --color-accent: #D94A38;
+  /* A sharp editorial brick red/orange for sparse highlights */
+  --color-border: rgba(28, 28, 25, 0.15);
+  /* Structure lines */
+  --color-border-light: rgba(28, 28, 25, 0.05);
+  /* Soft structure lines */
+
+  /* Type Scale — Highly restrained, smaller typography */
+  --text-xs: clamp(0.6rem, 0.6rem + 0.1vw, 0.7rem);
+  --text-sm: clamp(0.75rem, 0.75rem + 0.1vw, 0.85rem);
+  --text-base: clamp(0.9rem, 0.9rem + 0.2vw, 1.05rem);
+  --text-lg: clamp(1.1rem, 1.1rem + 0.3vw, 1.3rem);
+  --text-xl: clamp(1.3rem, 1.3rem + 0.5vw, 1.6rem);
+  --text-2xl: clamp(1.6rem, 1.5rem + 1vw, 2.2rem);
+  --text-3xl: clamp(2.2rem, 2rem + 1.5vw, 3rem);
+  --text-hero: clamp(2.5rem, 2.5rem + 2vw, 4rem);
+  /* Very small hero text compared to before */
+
+  /* Font Families */
+  --font-display: var(--font-davinci, "TRJNDaVinci", serif);
+  /* Keeping serif for editorial feel */
+  --font-body: var(--font-plus-jakarta-sans, sans-serif);
+  --font-mono: var(--font-geist-mono, monospace);
+
+  /* Easing */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-dramatic: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+/* Base */
+html {
+  scroll-padding-top: 72px;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-weight: 400;
+}
+
+/* Typography Utilities */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.tracking-tight-editorial {
+  letter-spacing: -0.01em;
+}
+
+.tracking-wide-editorial {
+  letter-spacing: 0.15em;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  /* Thin scrollbar for minimal feel */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(28, 28, 25, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(28, 28, 25, 0.4);
+}
+
+/* --- Swiss Layout Utilities --- */
+
+/* Hairline dividers */
+.hairline-b {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hairline-t {
+  border-top: 1px solid var(--color-border);
+}
+
+.hairline-l {
+  border-left: 1px solid var(--color-border);
+}
+
+.hairline-r {
+  border-right: 1px solid var(--color-border);
+}
+
+/* Media handling */
+.editorial-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(110%);
+  /* Slight editorial filter */
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 45s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}

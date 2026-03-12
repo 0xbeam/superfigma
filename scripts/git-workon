@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+. "$repo_root/scripts/git-project-map.sh"
+
+project="${1:-}"
+
+if [ -z "$project" ]; then
+  echo "Usage: git workon <project>"
+  echo
+  echo "Available projects:"
+  list_known_projects
+  exit 1
+fi
+
+branch="$(branch_for_project "$project" 2>/dev/null || true)"
+path="$(path_for_project "$project" 2>/dev/null || true)"
+
+if [ -z "$branch" ] || [ -z "$path" ]; then
+  echo "Unknown project: $project"
+  echo
+  echo "Available projects:"
+  list_known_projects
+  exit 1
+fi
+
+if ! git show-ref --verify --quiet "refs/heads/$branch"; then
+  git branch "$branch"
+fi
+
+git checkout "$branch"
+
+printf 'Now on %s\n' "$branch"
+printf 'Project path: %s\n' "$path"

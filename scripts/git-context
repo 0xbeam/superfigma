@@ -1,0 +1,51 @@
+#!/bin/sh
+
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+repo_name="$(basename "$repo_root")"
+
+. "$repo_root/scripts/git-project-map.sh"
+
+target="${1:-$(pwd)}"
+
+case "$target" in
+  /*)
+    rel_target="${target#"$repo_root"/}"
+    if [ "$target" = "$repo_root" ]; then
+      rel_target="."
+    fi
+    ;;
+  .)
+    rel_target="."
+    ;;
+  *)
+    rel_target="$target"
+    ;;
+esac
+
+if [ "$rel_target" = "." ]; then
+  project="meta"
+  preferred_branch="main"
+else
+  project="$(project_for_path "$rel_target")"
+  preferred_branch="$(branch_for_project "$project" 2>/dev/null || printf 'n/a')"
+fi
+
+if branch_matches_project "$branch" "$project"; then
+  status="OK"
+else
+  status="MISMATCH"
+fi
+
+printf 'Repo: %s\n' "$repo_name"
+printf 'Branch: %s\n' "$branch"
+printf 'Path: %s\n' "$rel_target"
+printf 'Project lane: %s\n' "$project"
+printf 'Preferred branch: %s\n' "$preferred_branch"
+printf 'Status: %s\n' "$status"
+
+if [ "$status" = "MISMATCH" ] && [ "$project" != "shared" ]; then
+  printf 'Hint: git workon %s\n' "$project"
+fi

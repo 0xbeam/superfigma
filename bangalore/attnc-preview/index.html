@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Attntion Co — Landing Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&family=Inter:wght@400;600&family=Source+Serif+4:ital,wght@0,300;0,500;1,500&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS (from codex-design-export.json — Website v4 export, 2026-03-03) ===== */
+:root {
+  /* Raw color variables from codex-design-export.json > colorSystem.variableColors */
+  --token-pink-100: #fbe5f6;
+  --token-pink-200: #e9a5dc;
+  --token-pink-300: #94197c;
+  --token-pink-400: #281524;
+  --token-red-100: #fce9e9;
+  --token-red-200: #ff999b;
+  --token-red-300: #c7191f;
+  --token-red-400: #2d1616;
+  --token-orange-100: #feecdd;
+  --token-orange-200: #ffb570;
+  --token-orange-300: #a32c00;
+  --token-orange-400: #281a15;
+  --token-yellow-100: #f3f1c9;
+  --token-yellow-200: #d0c709;
+  --token-yellow-300: #524e00;
+  --token-yellow-400: #222101;
+  --token-green-100: #e5fbe4;
+  --token-green-200: #63e261;
+  --token-green-300: #156813;
+  --token-green-400: #092b08;
+  --token-blue-100: #e0faff;
+  --token-blue-200: #5bc9dc;
+  --token-blue-300: #1a5e6b;
+  --token-blue-400: #0a2429;
+  --token-purple-100: #f0f6fe;
+  --token-purple-200: #9999ff;
+  --token-purple-300: #3e3dd6;
+  --token-purple-400: #181849;
+
+  /* Semantic surface + text mapping */
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f7f9ff;
+  --color-bg-dark: #0a0f18;
+  --color-bg-dark-elevated: #0f1726;
+  --color-bg-dark-muted: #1a2538;
+  --color-border: #dbe2ee;
+  --color-border-dark: #2d3a53;
+  --color-text: #111827;
+  --color-text-muted: #4b5568;
+  --color-text-muted-light: #6b7690;
+  --color-text-on-dark: #f5f9ff;
+  --color-text-on-dark-muted: #b7c2d8;
+  --color-text-on-dark-soft: #8d9ab6;
+  --color-accent-green: var(--token-green-200);
+  --color-accent-green-dark: var(--token-green-300);
+  --color-accent-pink: var(--token-pink-300);
+  --color-accent-pink-light: var(--token-pink-200);
+  --color-accent-red: var(--token-red-300);
+  --color-accent-blue: var(--token-blue-300);
+  --color-accent-blue-light: var(--token-blue-200);
+  --color-accent-purple: var(--token-purple-300);
+  --color-on-accent: #04110a;
+  --color-bg-dark-grid: #202d43;
+  /* Typography — from export textStyleCatalog (Victor Serif → Source Serif 4, Inter Display → Inter, DM Mono) */
+  --font-display: "Source Serif 4", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "DM Mono", monospace;
+  /* H1: 128px, 100%, -1.5px */
+  --text-h1-size: 128px;
+  --text-h1-weight: 300;
+  --text-h1-line: 1;
+  --text-h1-spacing: -1.5px;
+  /* H2: 104px, 100%, -1.5px */
+  --text-h2-size: 104px;
+  --text-h2-weight: 300;
+  --text-h2-line: 1;
+  --text-h2-spacing: -1.5px;
+  /* H3: 64px, 110%, -1px */
+  --text-h3-size: 64px;
+  --text-h3-weight: 300;
+  --text-h3-line: 1.1;
+  --text-h3-spacing: -1px;
+  /* H4: 32px, H5: 24px */
+  --text-h4-size: 32px;
+  --text-h5-size: 24px;
+  --text-h4-line: 1.3;
+  --text-h5-line: 1.3;
+  /* Body: 20px, 150%, -1.1% | Body Small: 16px | Caption: 12px, UPPER, DM Mono */
+  --text-body-large: 24px;
+  --text-body: 20px;
+  --text-body-line: 1.5;
+  --text-body-spacing: -0.011em;
+  --text-body-small: 16px;
+  --text-body-small-line: 1.4;
+  --text-label-size: 12px;
+  --text-label-spacing: 0.08em;
+  --text-caption: 12px;
+  --text-caption-line: 1.6;
+  --text-small: 12px;
+  /* Spacing — from export padding (lg mode: 103:3) */
+  --space-section-y: 120px;
+  --space-section-x: 64px;
+  --space-section-x-md: 32px;
+  --space-card: 40px 32px;
+  --space-card-gap: 16px;
+  --space-grid-gap: 24px;
+  --grid-gutter: 24px;
+  --radius-card: 8px;
+  --radius-button: 4px;
+  --radius-tv: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-body);
+  line-height: var(--text-body-line);
+  letter-spacing: var(--text-body-spacing);
+}
+
+/* Utility */
+.box { border: 1px solid var(--color-border); }
+.label {
+  font-size: var(--text-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--text-label-spacing);
+  color: var(--color-text-muted-light);
+  font-family: var(--font-mono);
+}
+.placeholder {
+  background: var(--color-bg-dark-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-on-dark-soft);
+  font-size: 12px;
+  font-family: var(--font-body);
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px var(--space-section-x-md);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  font-family: var(--font-body);
+}
+.nav-logo { font-size: var(--text-body-small); font-weight: 500; font-family: var(--font-display); color: var(--color-text); }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: color 180ms ease;
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-cta {
+  font-size: var(--text-caption);
+  padding: 8px 20px;
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-button);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: var(--text-label-spacing);
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.nav-cta:hover { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+
+/* ===== HERO — FULL SCREEN VIDEO BG ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-bg-dark);
+  color: var(--color-text-on-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 80% 15%, color-mix(in srgb, var(--token-blue-200) 12%, transparent) 0%, transparent 55%),
+    radial-gradient(90% 80% at 10% 85%, color-mix(in srgb, var(--token-pink-300) 18%, transparent) 0%, transparent 55%);
+  pointer-events: none;
+}
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, color-mix(in srgb, var(--token-blue-400) 72%, #05070d) 0%, color-mix(in srgb, var(--token-purple-400) 54%, #05070d) 45%, #070a12 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-on-dark-soft);
+  font-size: 14px;
+  font-family: var(--font-body);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+.hero-tagline {
+  font-size: var(--text-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--text-label-spacing);
+  color: var(--color-text-on-dark-soft);
+  margin-bottom: 24px;
+  font-family: var(--font-mono);
+}
+.hero h1 {
+  font-size: clamp(48px, 10vw, var(--text-h1-size));
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-line);
+  letter-spacing: -1.5px;
+  font-family: var(--font-display);
+}
+.hero h1 em { font-style: normal; color: var(--color-accent-green); }
+.hero-rotating {
+  margin-top: 32px;
+  font-size: var(--text-body-small);
+  color: var(--color-text-on-dark-muted);
+  font-family: var(--font-body);
+}
+.hero-rotating strong { color: var(--color-text-on-dark); }
+
+/* ===== MARQUEE ===== */
+.marquee-section {
+  padding: 20px var(--space-section-x);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: var(--text-h4-size);
+  font-weight: var(--text-h1-weight);
+  color: color-mix(in srgb, var(--token-purple-300) 32%, var(--color-text-muted-light));
+  letter-spacing: -1px;
+  font-family: var(--font-display);
+}
+
+/* ===== ABOUT — MULTI-CARD LAYOUT ===== */
+.about {
+  padding: var(--space-section-y) var(--space-section-x);
+  border-bottom: 1px solid var(--color-border);
+}
+.about-header {
+  margin-bottom: 48px;
+}
+.about-header h2 {
+  font-size: clamp(32px, 4vw, var(--text-h3-size));
+  font-weight: 300;
+  line-height: var(--text-h3-line);
+  letter-spacing: -1px;
+  max-width: 700px;
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+.about-header h2 em { font-style: normal; color: var(--color-accent-green); }
+
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-grid-gap);
+}
+.about-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card-gap);
+  min-height: 240px;
+  background: linear-gradient(155deg, #ffffff 0%, var(--color-bg-subtle) 100%);
+}
+.about-card-num { font-size: var(--text-label-size); color: var(--color-text-muted-light); font-family: var(--font-mono); }
+.about-card h3 { font-size: var(--text-h5-size); font-weight: 500; line-height: var(--text-h5-line); font-family: var(--font-display); color: var(--color-text); }
+.about-card p { font-size: var(--text-body-small); color: var(--color-text-muted); line-height: var(--text-body-small-line); font-family: var(--font-body); }
+
+/* ===== SERVICES — VIDEO CARDS ===== */
+.services-section {
+  padding: var(--space-section-y) var(--space-section-x);
+  border-bottom: 1px solid var(--color-border);
+}
+.services-section .section-label { margin-bottom: 32px; }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.service-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: var(--color-bg-dark-elevated);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: var(--color-text-on-dark);
+}
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(3, 6, 11, 0.74) 82%);
+}
+.service-card:nth-child(1) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-green-200) 35%, transparent); }
+.service-card:nth-child(2) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-pink-200) 35%, transparent); }
+.service-card:nth-child(3) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-red-200) 35%, transparent); }
+.service-card:nth-child(4) { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--token-blue-200) 35%, transparent); }
+.service-card-video {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-dark-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-on-dark-soft);
+  font-size: var(--text-caption);
+  font-family: var(--font-body);
+}
+.service-card-content {
+  position: relative;
+  z-index: 2;
+}
+.service-card-num { font-size: var(--text-small); color: var(--color-text-on-dark-muted); margin-bottom: 4px; font-family: var(--font-mono); }
+.service-card-cat { font-size: var(--text-small); text-transform: uppercase; letter-spacing: var(--text-label-spacing); color: var(--color-text-on-dark-muted); margin-bottom: 6px; font-family: var(--font-body); }
+.service-card-title { font-size: var(--text-h5-size); font-weight: 500; line-height: 1.25; font-family: var(--font-display); }
+.service-card-desc { font-size: var(--text-caption); color: var(--color-text-on-dark-muted); line-height: var(--text-caption-line); margin-top: 8px; font-family: var(--font-body); }
+
+/* ===== WORK — THUMBNAIL CARDS ===== */
+.work-section {
+  padding: var(--space-section-y) 0 48px;
+  border-bottom: 1px solid var(--color-border);
+}
+.work-header {
+  padding: 0 var(--space-section-x);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+}
+.work-header h2 { font-size: clamp(40px, 5vw, var(--text-h2-size)); font-weight: 300; line-height: 1; letter-spacing: -1.5px; font-family: var(--font-display); color: var(--color-text); }
+.work-header h2 em { font-style: normal; font-weight: 300; }
+.work-count { font-size: var(--text-caption); color: var(--color-text-muted-light); font-family: var(--font-body); }
+
+.work-scroll {
+  display: flex;
+  gap: 12px;
+  padding: 0 var(--space-section-x);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.work-scroll::-webkit-scrollbar { display: none; }
+
+.work-card {
+  width: 360px;
+  flex-shrink: 0;
+  position: relative;
+}
+.work-card-thumb {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: var(--color-bg-dark-elevated);
+  border-radius: var(--radius-card);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-on-dark-soft);
+  font-size: var(--text-caption);
+  font-family: var(--font-body);
+}
+.work-card-stat {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: color-mix(in srgb, var(--token-blue-300) 86%, rgba(0, 0, 0, 0.7));
+  color: #f4fcff;
+  font-size: var(--text-label-size);
+  padding: 4px 10px;
+  font-weight: 600;
+  border-radius: 999px;
+  font-family: var(--font-body);
+}
+.work-card-info { padding: 12px 0; }
+.work-card-cat { font-size: var(--text-small); text-transform: uppercase; letter-spacing: var(--text-label-spacing); color: var(--color-text-muted-light); font-family: var(--font-body); }
+.work-card-name { font-size: var(--text-body); font-weight: 600; margin-top: 4px; font-family: var(--font-body); color: var(--color-text); }
+.work-card-meta { font-size: var(--text-caption); color: var(--color-text-muted-light); margin-top: 2px; font-family: var(--font-body); }
+
+.work-hint { padding: 16px var(--space-section-x) 0; font-size: var(--text-label-size); color: var(--color-text-muted-light); font-family: var(--font-body); }
+
+/* ===== STACK — TV/SCREEN LAYOUT ===== */
+.stack-section {
+  padding: var(--space-section-y) var(--space-section-x);
+  background: var(--color-bg-dark-elevated);
+  color: var(--color-text-on-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+.stack-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+}
+.stack-header-left .label { color: var(--color-text-on-dark-soft); margin-bottom: 12px; }
+.stack-header-left h2 { font-size: clamp(40px, 5vw, var(--text-h2-size)); font-weight: 300; line-height: 1; letter-spacing: -1.5px; font-family: var(--font-display); }
+.stack-header-left h2 em { font-style: normal; color: var(--color-accent-green); }
+.stack-tagline { font-size: var(--text-body-small); color: var(--color-text-on-dark-soft); max-width: 360px; text-align: right; line-height: var(--text-body-line); font-family: var(--font-body); }
+
+.stack-tv {
+  max-width: 800px;
+  margin: 0 auto;
+  border: 2px solid var(--color-border-dark);
+  border-radius: var(--radius-tv);
+  overflow: hidden;
+  position: relative;
+}
+.stack-tv-bar {
+  background: var(--color-bg-dark-muted);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--color-border-dark);
+}
+.stack-tv-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border-dark); }
+.stack-tv-dot:nth-child(1) { background: var(--token-red-200); }
+.stack-tv-dot:nth-child(2) { background: var(--token-yellow-200); }
+.stack-tv-dot:nth-child(3) { background: var(--token-green-200); }
+.stack-tv-title { font-size: var(--text-label-size); color: var(--color-text-on-dark-soft); margin-left: auto; font-family: var(--font-body); }
+.stack-tv-screen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  background: var(--color-bg-dark-grid);
+}
+.stack-tv-cell {
+  background: var(--color-bg-dark-elevated);
+  padding: var(--space-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.stc-num { font-size: var(--text-small); color: var(--color-text-on-dark-soft); font-family: var(--font-mono); }
+.stc-name { font-size: var(--text-h5-size); font-weight: 500; font-family: var(--font-display); }
+.stc-desc { font-size: var(--text-caption); color: var(--color-text-on-dark-soft); line-height: var(--text-caption-line); font-family: var(--font-body); }
+.stc-tags { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.stc-tag { font-size: var(--text-caption); padding: 4px 10px; border: 1px solid var(--color-border-dark); color: var(--color-text-on-dark-soft); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: var(--text-label-spacing); }
+
+.stack-tv-cell:nth-child(1) .stc-name { color: var(--color-accent-green); }
+.stack-tv-cell:nth-child(2) .stc-name { color: var(--color-accent-pink); }
+.stack-tv-cell:nth-child(3) .stc-name { color: var(--color-accent-red); }
+.stack-tv-cell:nth-child(4) .stc-name { color: var(--color-accent-blue); }
+
+/* ===== LOGOS + LOCATIONS — SPLIT ===== */
+.logos-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--color-border);
+  min-height: 40vh;
+}
+.logos-left {
+  padding: 48px var(--space-section-x);
+  border-right: 1px solid var(--color-border);
+}
+.logos-left-label { font-size: var(--text-label-size); text-transform: uppercase; letter-spacing: var(--text-label-spacing); color: var(--color-text-muted-light); margin-bottom: 20px; font-family: var(--font-body); }
+.locations-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  background: linear-gradient(140deg, #ffffff 0%, var(--token-purple-100) 100%);
+}
+.locations-title { font-size: var(--text-body-small); font-weight: 600; margin-bottom: 12px; font-family: var(--font-body); color: var(--color-text); }
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.loc-item {
+  text-align: center;
+  padding: 12px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: #fff;
+}
+.loc-item span { display: block; font-size: var(--text-small); color: var(--color-text-muted-light); font-weight: 400; margin-top: 2px; }
+
+.logos-right {
+  padding: 48px var(--space-section-x);
+}
+.logos-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 32px;
+}
+.stat-num { font-size: 64px; font-weight: 300; color: var(--color-accent-green); line-height: 1.1; font-family: var(--font-mono); letter-spacing: -1px; }
+.stat-label { font-size: var(--text-small); text-transform: uppercase; letter-spacing: var(--text-label-spacing); color: var(--color-text-muted-light); margin-top: 4px; font-family: var(--font-body); }
+
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-border);
+}
+.client-cell {
+  background: var(--color-bg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  min-height: 56px;
+  font-family: var(--font-body);
+}
+.client-cell:nth-child(5n + 1) { color: var(--token-purple-300); }
+.client-cell:nth-child(5n + 2) { color: var(--token-blue-300); }
+.client-cell:nth-child(5n + 3) { color: var(--token-green-300); }
+.client-cell:nth-child(5n + 4) { color: var(--token-red-300); }
+.client-cell:nth-child(5n) { color: var(--token-orange-300); }
+
+/* ===== QUOTE — WITH PHOTO ===== */
+.quote-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 60vh;
+  border-bottom: 1px solid var(--color-border);
+}
+.quote-left {
+  padding: 60px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.quote-mark { font-size: 80px; color: var(--color-border); line-height: 0.5; margin-bottom: 24px; font-family: var(--font-display); }
+.quote-text { font-size: var(--text-h4-size); font-weight: 300; line-height: 1.3; letter-spacing: -0.5px; max-width: 520px; font-family: var(--font-display); color: var(--color-text); }
+.quote-text em { font-style: normal; color: var(--color-accent-green); }
+.quote-attr { font-size: var(--text-body-small); font-weight: 600; margin-top: 24px; font-family: var(--font-body); color: var(--color-text); }
+.quote-role { font-size: var(--text-caption); color: var(--color-text-muted-light); margin-top: 2px; font-family: var(--font-body); }
+.quote-footnote {
+  margin-top: 16px;
+  font-size: var(--text-label-size);
+  color: var(--color-text-muted-light);
+  padding: 8px 12px;
+  border-left: 2px solid var(--color-border);
+  font-family: var(--font-body);
+}
+.quote-right {
+  background: linear-gradient(145deg, var(--token-blue-100) 0%, var(--token-purple-100) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-body);
+}
+
+/* ===== INSIGHTS — HORIZONTAL 3-COL ===== */
+.insights-section {
+  padding: var(--space-section-y) var(--space-section-x);
+  background: var(--color-bg-dark-elevated);
+  color: var(--color-text-on-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+.insights-header {
+  margin-bottom: 40px;
+}
+.insights-header h2 { font-size: clamp(32px, 4vw, var(--text-h3-size)); font-weight: 300; line-height: 1.1; letter-spacing: -1px; font-family: var(--font-display); }
+.insights-header h2 em { font-weight: 300; }
+
+.insights-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-grid-gap);
+}
+.ins-card {
+  position: relative;
+}
+.ins-card-video {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--token-blue-400) 65%, #0b111f) 0%, color-mix(in srgb, var(--token-purple-400) 50%, #0b111f) 100%);
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-on-dark-soft);
+  font-size: var(--text-caption);
+  margin-bottom: 16px;
+  font-family: var(--font-body);
+}
+.ins-card-cat { font-size: var(--text-small); text-transform: uppercase; letter-spacing: var(--text-label-spacing); color: var(--color-text-on-dark-soft); margin-bottom: 6px; font-family: var(--font-body); }
+.ins-card-title { font-size: var(--text-h5-size); font-weight: 500; line-height: 1.3; font-family: var(--font-display); }
+
+/* ===== SOCIAL PROOF BANNER (replaces testimonials) ===== */
+.social-proof {
+  padding: var(--space-section-y) var(--space-section-x);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-subtle);
+}
+.social-proof .label { margin-bottom: 16px; }
+.social-proof h2 {
+  font-size: clamp(32px, 4vw, var(--text-h3-size));
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+.social-proof h2 em { font-style: normal; color: var(--color-accent-green); }
+.social-proof-sub {
+  font-size: var(--text-body-small);
+  color: var(--color-text-muted-light);
+  margin-top: 12px;
+  font-family: var(--font-body);
+}
+
+/* ===== CTA ===== */
+.cta-section {
+  padding: 120px var(--space-section-x);
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+}
+.cta-section h2 { font-size: clamp(40px, 6vw, 64px); font-weight: 300; line-height: 1.15; letter-spacing: -1px; margin-bottom: 24px; font-family: var(--font-display); color: var(--color-text); }
+.cta-section h2 em { font-style: normal; color: var(--color-accent-green); }
+.cta-p { font-size: var(--text-body-small); color: var(--color-text-muted); max-width: 400px; margin: 0 auto 32px; line-height: var(--text-body-line); font-family: var(--font-body); }
+.cta-btn {
+  display: inline-block;
+  padding: 20px 40px;
+  background: var(--color-accent-green);
+  color: var(--color-on-accent);
+  text-decoration: none;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--text-label-spacing);
+  border-radius: var(--radius-button);
+  font-family: var(--font-mono);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--token-green-300) 28%, transparent);
+}
+.cta-loc { font-size: var(--text-label-size); color: var(--color-text-muted-light); margin-top: 16px; font-family: var(--font-body); }
+
+/* ===== FOOTER ===== */
+footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 24px var(--space-section-x);
+  align-items: center;
+  font-size: var(--text-caption);
+  color: var(--color-text-muted-light);
+  font-family: var(--font-body);
+}
+footer a { color: var(--color-text-muted-light); text-decoration: none; }
+.f-links { display: flex; gap: 16px; justify-content: center; }
+.f-copy { text-align: right; font-size: var(--text-small); }
+.logos-trust-label { margin-bottom: 16px; }
+
+/* ===== RESPONSIVE (export lg/sm breakpoints) ===== */
+@media (max-width: 1024px) {
+  :root {
+    --space-section-x: 32px;
+    --space-section-y: 80px;
+  }
+}
+@media (max-width: 900px) {
+  .hero h1 { font-size: clamp(36px, 8vw, 56px); }
+  .about-cards { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .stack-tv-screen { grid-template-columns: 1fr; }
+  .logos-section { grid-template-columns: 1fr; }
+  .quote-section { grid-template-columns: 1fr; }
+  .insights-row { grid-template-columns: 1fr; }
+  .locations-grid { grid-template-columns: repeat(2, 1fr); }
+  .client-grid { grid-template-columns: repeat(2, 1fr); }
+  footer { grid-template-columns: 1fr; text-align: center; gap: 8px; }
+  .f-copy { text-align: center; }
+}
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">The Attntion Co</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#stack">Stack</a>
+    <a href="#thinking">Thinking</a>
+  </div>
+  <a href="#cta" class="nav-cta">Start a project</a>
+</nav>
+
+<!-- HERO — FULL SCREEN VIDEO BG WITH TEXT OVERLAY -->
+<section class="hero">
+  <div class="hero-video-bg">[Full-screen showreel video — autoplay, muted, loop]</div>
+  <div class="hero-content">
+    <div class="hero-tagline">by Spacekayak — Attention, Engineered.</div>
+    <h1>Attention is not <em>marketing.</em></h1>
+    <div class="hero-rotating">
+      your <strong>tech</strong>, your <strong>story</strong>, your <strong>startup</strong> — meets the attention it needs
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  ATTENTION &nbsp;&middot;&nbsp; ENGINEERED &nbsp;&middot;&nbsp; CAPTURE &nbsp;&middot;&nbsp; EXPLAIN &nbsp;&middot;&nbsp; MULTIPLY &nbsp;&middot;&nbsp; COMPOUND &nbsp;&middot;&nbsp; CINEMA &nbsp;&middot;&nbsp; SYSTEMS
+</div>
+
+<!-- ABOUT — MULTI-CARD LAYOUT -->
+<section class="about">
+  <div class="about-header">
+    <h2>The last decade made it cheap to build. This decade makes it impossible to be <em>seen.</em></h2>
+  </div>
+  <div class="about-cards">
+    <div class="about-card">
+      <div class="about-card-num">01</div>
+      <h3>Attention systems, not campaigns</h3>
+      <p>We build distribution, narrative, and visibility as a first-class advantage for early-stage startups.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-num">02</div>
+      <h3>Founder-led narratives</h3>
+      <p>Stories designed to earn trust, accelerate adoption, and compound visibility over time.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-card-num">03</div>
+      <h3>Systems that convert</h3>
+      <p>Content engineered to connect, convince, and convert — not just look good on a mood board.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES — VIDEO CARDS WITH BOLD OVERLAY -->
+<section class="services-section">
+  <div class="label section-label">What we build</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-card-video">[Video — founder on camera]</div>
+      <div class="service-card-content">
+        <div class="service-card-num">01</div>
+        <div class="service-card-cat">Trust & Narrative</div>
+        <div class="service-card-title">Founder-led films</div>
+        <div class="service-card-desc">IRL stories that earn trust before a single feature is demoed.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-video">[Video — product UI motion]</div>
+      <div class="service-card-content">
+        <div class="service-card-num">02</div>
+        <div class="service-card-cat">Clarity & Conviction</div>
+        <div class="service-card-title">Product demos & explainers</div>
+        <div class="service-card-desc">Motion and visual storytelling that makes the complex obvious.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-video">[Video — hype reel cuts]</div>
+      <div class="service-card-content">
+        <div class="service-card-num">03</div>
+        <div class="service-card-cat">Capture & Convert</div>
+        <div class="service-card-title">Hype reels & 3D launch</div>
+        <div class="service-card-desc">Platform-native content that captures the scroll.</div>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-card-video">[Video — content grid]</div>
+      <div class="service-card-content">
+        <div class="service-card-num">04</div>
+        <div class="service-card-cat">Coming Soon</div>
+        <div class="service-card-title">Scaled content systems</div>
+        <div class="service-card-desc">From one shoot to a hundred assets. Content as infrastructure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK — THUMBNAIL CARDS WITH STATS -->
+<section class="work-section" id="work">
+  <div class="work-header">
+    <h2>Selected <em>Work</em></h2>
+    <div class="work-count">6 / 50+ films shipped</div>
+  </div>
+  <div class="work-scroll">
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">1M+ views</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Founder-led Film · YC Launch</div>
+        <div class="work-card-name">Emergent Labs</div>
+        <div class="work-card-meta">Series A launch — founder narrative that broke 1M organic views</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">500K views</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Product Demo · 3D Explainer</div>
+        <div class="work-card-name">Extend AI</div>
+        <div class="work-card-meta">Series B — 3D motion explainer for document AI platform</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">Brand launch</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Launch Film · AI Infrastructure</div>
+        <div class="work-card-name">Sentient</div>
+        <div class="work-card-meta">Open-source AI — cinematic brand film for mainnet launch</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">2M+ reach</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Hype Reel · Fintech</div>
+        <div class="work-card-name">CoinDCX</div>
+        <div class="work-card-meta">India's largest crypto exchange — 2M+ organic social reach</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">Web3 explainer</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Product Demo · Infrastructure</div>
+        <div class="work-card-name">Polygon</div>
+        <div class="work-card-meta">Ethereum scaling — simplified complex L2 tech for developers</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-card-thumb">
+        <div class="work-card-stat">Seed narrative</div>
+        [Video thumbnail]
+      </div>
+      <div class="work-card-info">
+        <div class="work-card-cat">Founder Story · Seed Round</div>
+        <div class="work-card-name">Bench AI</div>
+        <div class="work-card-meta">AI hiring — founder-led story that helped close seed round</div>
+      </div>
+    </div>
+  </div>
+  <div class="work-hint">← Scroll to explore →</div>
+</section>
+
+<!-- THE STACK — TV/SCREEN LAYOUT -->
+<section class="stack-section" id="stack">
+  <div class="stack-header">
+    <div class="stack-header-left">
+      <div class="label">The framework</div>
+      <h2>The <em>Attention</em> Stack</h2>
+    </div>
+    <div class="stack-tagline">Four layers. One system. If the first three are weak, the fourth becomes paid acquisition forever.</div>
+  </div>
+  <div class="stack-tv">
+    <div class="stack-tv-bar">
+      <div class="stack-tv-dot"></div>
+      <div class="stack-tv-dot"></div>
+      <div class="stack-tv-dot"></div>
+      <div class="stack-tv-title">THE ATTENTION STACK — SPACEKAYAK</div>
+    </div>
+    <div class="stack-tv-screen">
+      <div class="stack-tv-cell">
+        <div class="stc-num">01</div>
+        <div class="stc-name">Capture</div>
+        <div class="stc-desc">The first three seconds. Win attention through problem clarity and platform-native packaging.</div>
+        <div class="stc-tags"><span class="stc-tag">Launch Films</span><span class="stc-tag">Hooks</span><span class="stc-tag">Founder POV</span></div>
+      </div>
+      <div class="stack-tv-cell">
+        <div class="stc-num">02</div>
+        <div class="stc-name">Explain</div>
+        <div class="stc-desc">The first three minutes. Reward attention with product truth — demos and visual stories.</div>
+        <div class="stc-tags"><span class="stc-tag">Product Demos</span><span class="stc-tag">3D Motion</span><span class="stc-tag">Explainers</span></div>
+      </div>
+      <div class="stack-tv-cell">
+        <div class="stc-num">03</div>
+        <div class="stc-name">Multiply</div>
+        <div class="stc-desc">Turn users into distribution. Using the product becomes sharing the product.</div>
+        <div class="stc-tags"><span class="stc-tag">AI-scaled</span><span class="stc-tag">Platform-native</span><span class="stc-tag">Promos</span></div>
+      </div>
+      <div class="stack-tv-cell">
+        <div class="stc-num">04</div>
+        <div class="stc-name">Compound</div>
+        <div class="stc-desc">Build the flywheel. Systems beat campaigns. Revenue follows attention.</div>
+        <div class="stc-tags"><span class="stc-tag">Distribution</span><span class="stc-tag">Flywheel</span><span class="stc-tag">GTM Strategy</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS + LOCATIONS — SPLIT -->
+<section class="logos-section">
+  <div class="logos-left">
+    <div class="logos-left-label">We shoot in</div>
+    <div class="locations-card">
+      <div class="locations-title">Global production, startup speed</div>
+      <div class="locations-grid">
+        <div class="loc-item">NYC<span>New York</span></div>
+        <div class="loc-item">SF<span>San Francisco</span></div>
+        <div class="loc-item">BER<span>Berlin</span></div>
+        <div class="loc-item">SG<span>Singapore</span></div>
+        <div class="loc-item">BLR<span>Bangalore</span></div>
+        <div class="loc-item">DEL<span>Delhi</span></div>
+        <div class="loc-item">AMS<span>Amsterdam</span></div>
+        <div class="loc-item">LA<span>Los Angeles</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="logos-right">
+    <div class="logos-stats">
+      <div><div class="stat-num">50+</div><div class="stat-label">Films shipped</div></div>
+      <div><div class="stat-num">20M+</div><div class="stat-label">Organic views</div></div>
+    </div>
+    <div class="label logos-trust-label">Trusted by founders building the future</div>
+    <div class="client-grid">
+      <div class="client-cell">Sentient</div>
+      <div class="client-cell">Polygon</div>
+      <div class="client-cell">CoinDCX</div>
+      <div class="client-cell">Extend</div>
+      <div class="client-cell">Nerve.AI</div>
+      <div class="client-cell">BFI</div>
+      <div class="client-cell">Jupiter</div>
+      <div class="client-cell">DeCharge</div>
+      <div class="client-cell">Emergent</div>
+      <div class="client-cell">KAST</div>
+      <div class="client-cell">GPU.NET</div>
+      <div class="client-cell">Deepflow</div>
+      <div class="client-cell">Echelon</div>
+      <div class="client-cell">ETHIndia</div>
+      <div class="client-cell">Agemo</div>
+      <div class="client-cell">Exomatter</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE — WITH LARGE PHOTO -->
+<section class="quote-section">
+  <div class="quote-left">
+    <div class="quote-mark">&ldquo;</div>
+    <div class="quote-text">They didn't make us a video. They built us an <em>attention system.</em> Our launch went from a tweet to a movement.</div>
+    <div class="quote-attr">Mukund S.</div>
+    <div class="quote-role">Co-founder, Emergent Labs</div>
+    <div class="quote-footnote">Emergent Labs — $100M ARR company. Spacekayak produced their YC launch film.</div>
+  </div>
+  <div class="quote-right">
+    [Large photo of Mukund S.]<br>
+    <span style="font-size:10px">[+ on-hover video autoplayer — interaction phase]</span>
+  </div>
+</section>
+
+<!-- INSIGHTS — HORIZONTAL 3-COL WITH VIDEO -->
+<section class="insights-section" id="thinking">
+  <div class="insights-header">
+    <h2><em>Our</em> Thinking</h2>
+  </div>
+  <div class="insights-row">
+    <div class="ins-card">
+      <div class="ins-card-video">[Video autoplay — thesis]</div>
+      <div class="ins-card-cat">Thesis</div>
+      <div class="ins-card-title">Attention is infrastructure, not marketing</div>
+    </div>
+    <div class="ins-card">
+      <div class="ins-card-video">[Video autoplay — patterns]</div>
+      <div class="ins-card-cat">Patterns</div>
+      <div class="ins-card-title">Virality is architecture, not luck</div>
+    </div>
+    <div class="ins-card">
+      <div class="ins-card-video">[Video autoplay — playbook]</div>
+      <div class="ins-card-cat">Playbook</div>
+      <div class="ins-card-title">Your product is media. Act like it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF (replaces testimonials) -->
+<section class="social-proof">
+  <div class="label">The Attntion Co</div>
+  <h2>From the best <em>tastemakers</em> in tech</h2>
+  <div class="social-proof-sub">by Spacekayak</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <h2>The future belongs to those who <em>earn the frame.</em></h2>
+  <p class="cta-p">From kickoff to delivery in weeks, not months. Flexible, founder-friendly, built for speed.</p>
+  <a href="mailto:p@spacekayak.xyz" class="cta-btn">Start a project →</a>
+  <div class="cta-loc">Now booking — BLR · SF · NYC · LA</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>The Attntion Co</div>
+  <div class="f-links">
+    <a href="mailto:p@spacekayak.xyz">Email</a>
+    <a href="#">Twitter</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+  </div>
+  <div class="f-copy">© Spacekayak '26</div>
+</footer>
+
+</body>
+</html>

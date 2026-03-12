@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Know Your GP — Paul Finney</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@300;400;500&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+::selection{background:#2A7A5B;color:#fff}
+:root{
+  --white:#FFFFFF;--off:#FAFAF8;--black:#111;--accent:#2A7A5B;--accent-light:#E8F5EE;--grey:#888;
+  --border:#E8E5E0;--card:#F6F5F2;--navy:#111114;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --display:'Cormorant',serif;
+  --sans:'DM Sans',-apple-system,system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--black);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 clamp(20px,4vw,48px);height:56px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.04)}
+.nl{font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--black)}
+.nl sup{font-size:.38rem;color:var(--accent);vertical-align:super;margin-left:1px}
+.nr{display:flex;align-items:center;gap:24px}
+.nr a{font-family:var(--sans);font-size:.68rem;letter-spacing:.02em;color:var(--grey);text-decoration:none;transition:color .2s}
+.nr a:hover{color:var(--black)}
+.nr a.active{color:var(--black);font-weight:500}
+.nb{font-family:var(--mono)!important;font-size:.6rem!important;letter-spacing:.05em!important;text-transform:uppercase;padding:6px 14px;background:var(--black);color:#fff!important;border-radius:3px;transition:opacity .2s}
+.nb:hover{opacity:.85}
+
+.w{max-width:720px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+section{padding:72px 0}
+section+section{border-top:1px solid var(--border)}
+.ey{font-family:var(--mono);font-size:.56rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.gl{width:32px;height:1px;background:var(--accent);margin-bottom:28px}
+
+.hero{min-height:88vh;display:flex;align-items:center;padding-top:56px}
+.hero-photo{width:120px;height:120px;border-radius:50%;background:var(--card);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:2.4rem;font-weight:300;color:var(--accent);opacity:0;animation:up .7s .15s var(--ease) forwards}
+.hero-tag{font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-top:28px;margin-bottom:14px;opacity:0;animation:up .7s .25s var(--ease) forwards}
+.hero-h{font-family:var(--display);font-weight:300;font-size:clamp(2rem,3.8vw,2.8rem);line-height:1.12;max-width:560px;margin-bottom:18px;opacity:0;animation:up .8s .35s var(--ease) forwards}
+.hero-h em{font-style:italic;font-weight:400}
+.hero-p{font-family:var(--sans);font-size:.95rem;line-height:1.78;color:#555;max-width:520px;opacity:0;animation:up .8s .5s var(--ease) forwards}
+
+.letter{font-family:var(--sans);font-size:.9rem;line-height:1.82;color:#444;max-width:640px}
+.letter p{margin-bottom:18px}
+.letter p:last-child{margin-bottom:0}
+.letter em{font-style:italic;color:var(--black)}
+.letter strong{font-weight:600;color:var(--black)}
+
+.cite-mark{font-family:var(--mono);font-size:.48rem;font-weight:500;color:var(--accent);background:var(--accent-light);padding:1px 5px;border-radius:2px;margin-left:2px;vertical-align:super;cursor:pointer;transition:background .2s,color .2s;text-decoration:none;display:inline}
+.cite-mark:hover{background:var(--accent);color:#fff}
+
+.card-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s var(--ease);display:flex;align-items:center;justify-content:center;padding:20px}
+.card-overlay.open{opacity:1;pointer-events:auto}
+.battle-card{background:var(--white);border-radius:8px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;padding:32px;transform:translateY(20px) scale(.97);transition:transform .35s var(--ease);box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.card-overlay.open .battle-card{transform:translateY(0) scale(1)}
+.bc-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border:none;background:var(--card);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:.7rem;color:var(--grey);transition:background .2s}
+.bc-close:hover{background:var(--border)}
+.bc-tag{font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.bc-title{font-family:var(--mono);font-size:1rem;font-weight:500;line-height:1.2;margin-bottom:14px}
+.bc-body{font-family:var(--sans);font-size:.84rem;line-height:1.7;color:#555}
+.bc-body p{margin-bottom:12px}
+.bc-body p:last-child{margin-bottom:0}
+.bc-body em{font-style:italic;color:var(--black)}
+.bc-body strong{font-weight:600;color:var(--black)}
+.bc-pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:14px}
+.bc-pill{font-family:var(--sans);font-size:.48rem;letter-spacing:.02em;padding:3px 7px;border:1px solid var(--border);border-radius:3px;color:var(--grey);text-transform:uppercase}
+
+.timeline{margin-top:40px}
+.tl-item{display:grid;grid-template-columns:80px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-year{font-family:var(--mono);font-size:.68rem;color:var(--accent);font-weight:500;padding-top:2px}
+.tl-content{font-family:var(--sans);font-size:.85rem;line-height:1.6;color:#555}
+.tl-content strong{color:var(--black);font-weight:600}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0}
+.sr{padding:16px 0;border-top:1px solid var(--border);text-align:center}
+.sr-n{font-family:var(--display);font-size:1.8rem;font-weight:300}
+.sr-l{font-family:var(--sans);font-size:.54rem;color:var(--grey);text-transform:uppercase;letter-spacing:.02em}
+
+.inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.inv{padding:14px;background:var(--card);border-radius:5px;border:1px solid rgba(0,0,0,.03)}
+.inv-name{font-family:var(--mono);font-size:.82rem;font-weight:500}
+.inv-desc{font-family:var(--sans);font-size:.6rem;color:var(--grey);margin-top:2px}
+
+.sig{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
+.sig-name{font-family:var(--display);font-size:1.5rem;font-style:italic}
+.sig-title{font-family:var(--sans);font-size:.68rem;color:var(--grey);margin-top:2px}
+.sig-line{width:32px;height:1px;background:var(--accent);margin-bottom:14px}
+
+.close-sec{padding:64px 40px;background:var(--navy);color:#fff;text-align:center}
+.close-sec h2{font-family:var(--mono);font-weight:400;font-size:clamp(.9rem,1.6vw,1.1rem);line-height:1.4;max-width:440px;margin:0 auto 14px}
+.close-sec h2 em{font-style:italic;font-family:var(--display);font-size:clamp(1.4rem,2.4vw,1.8rem);color:var(--accent)}
+.close-sec p{font-family:var(--sans);font-size:.82rem;color:rgba(255,255,255,.35);max-width:360px;margin:0 auto}
+.close-sec .back-link{display:inline-block;margin-top:24px;font-family:var(--mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;padding:8px 18px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);text-decoration:none;border-radius:3px;transition:all .2s}
+.close-sec .back-link:hover{border-color:var(--accent);color:var(--accent)}
+
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.03);padding:20px 40px;display:flex;justify-content:space-between;font-family:var(--sans);font-size:.56rem;color:rgba(255,255,255,.1)}
+
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.r{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.r.v{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .nr a:not(.nb):not(.active){display:none}
+  section{padding:48px 0}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .inv-grid{grid-template-columns:1fr}
+  .hero-photo{width:90px;height:90px;font-size:1.8rem}
+  .close-sec{padding:48px 20px}
+  footer{padding:16px 20px;flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nl">Imagine Fund<sup>&copy;</sup></a>
+  <div class="nr">
+    <a href="#">The Fund</a>
+    <a href="#" class="active">Know Your GP</a>
+    <a href="#" class="nb">Get in Touch</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="w">
+    <div class="hero-photo">PF</div>
+    <div class="hero-tag">Know Your GP</div>
+    <h1 class="hero-h">Hi, I&rsquo;m <em>Paul Finney.</em></h1>
+    <p class="hero-p">I&rsquo;ve spent twelve years in the trenches of Indian startups &mdash; as a builder, a creative director, a founder, an angel investor, and a media operator. This is what brought me to Imagine Fund.</p>
+  </div>
+</section>
+
+<div class="w">
+<section>
+  <div class="ey r">The Letter</div>
+  <div class="gl r"></div>
+  <div class="letter r">
+
+    <p>I moved to Bangalore in 2012 as a ninety-day-old fresher. No network, no money, no playbook. My first real job was as the first employee of <strong>Campus Diaries</strong> &mdash; a youth expression platform backed by <strong>TV Mohandas Pai</strong> through Aarin Capital and later 3one4 Capital.<span class="cite-mark" data-card="campus-diaries">1</span> I stayed four years. We built community properties across hundreds of universities &mdash; film festivals, spoken word stages, TEDx partnerships, scaled programs reaching thousands of students. That experience taught me something I still carry: <em>attention is infrastructure, and community is the only moat that survives a cycle.</em></p>
+
+    <p>Even before graduating with my Computer Science degree from Chandigarh Engineering College, I was already chasing creative work on the side. I shot photographs at Wills Lifestyle India Fashion Week, toured with musicians as their official photographer, covered India Golf Tour, India Bike Week.<span class="cite-mark" data-card="creative-roots">2</span> The camera was my first tool for understanding how stories move through people. It still is.</p>
+
+    <p>After college, I wanted to put creativity and technology together. I moved into product management at a time when AI was still an acronym most people couldn&rsquo;t define. At <strong>IceCream Labs</strong>, I became the youngest person in the room pitching AI solutions to <strong>Shell&rsquo;s Alicia Chang</strong>, working alongside the Pro CTO on enterprise deployments, and shipping Walmart&rsquo;s first batch of AI use cases live in 2016&ndash;17.<span class="cite-mark" data-card="early-ai">3</span></p>
+
+    <p>I then joined <strong>ParallelDots</strong> in Delhi &mdash; a machine intelligence group building everything from medical AI to internet-scale sentiment analysis. There, I launched an app called <strong>Carnifier AI</strong>, based on one of Andrej Karpathy&rsquo;s early papers on predicting photo popularity. The app went viral. Ryan Hoover himself featured the launch.<span class="cite-mark" data-card="paralleldots">4</span> Consumer instinct was something I didn&rsquo;t learn from a book. I learned it by shipping things that people actually used.</p>
+
+    <p>The deeper I went into AI, the more I wanted to build something of my own. I co-founded <strong>Eder Labs</strong> &mdash; a deeptech venture in AI and privacy, building trusted execution environments for machine learning workloads. We raised from <strong>Accel</strong>. We went through <strong>Cisco LaunchPad</strong>, <strong>Target Accelerator</strong>, <strong>NetApp Accelerator</strong>, and the <strong>Pioneers Batch 1</strong> program. I was part of <strong>YC Startup School</strong>.<span class="cite-mark" data-card="eder-labs">5</span> That experience was humbling. I learned that I wasn&rsquo;t cut out to be a deep infrastructure founder in the traditional sense &mdash; but I understood the builder&rsquo;s journey intimately, because I had lived it from the inside.</p>
+
+    <p>I took an early exit from Eder Labs to start <strong>SpaceKayak</strong>, channeling everything I&rsquo;d learned into a creative practice built for technically ambitious founders. The thesis was simple: the best companies in the world don&rsquo;t just build great products &mdash; they build great narratives. SpaceKayak became the creative arm for companies like <strong>Emergent, Composio, Sentient AI, Nerve AI</strong> (now acquired by OpenAI), <strong>Sarvam AI</strong>, and <strong>IAIRO</strong>. In Europe, we became the creative partner for <strong>Vanagon Ventures</strong> and <strong>Flog Ventures</strong>. We shaped the brand for <strong>BFI</strong> &mdash; Vitalik Buterin and Sandeep Nailwal&rsquo;s blockchain-for-public-health initiative.<span class="cite-mark" data-card="spacekayak">6</span></p>
+
+    <p>Along the way, my love for consumer experience led me to build <strong>Fireside</strong> &mdash; essentially India&rsquo;s Clubhouse. The product was acquired by <strong>Chingari</strong>, and the platform scaled to over a hundred million downloads.<span class="cite-mark" data-card="fireside">7</span> I also did private consulting with <strong>Kaliani Group</strong> and <strong>Cogknit Semantics</strong> on battery intelligence and government-grade design projects. I became a two-time <strong>Awwwards</strong> recognised designer.</p>
+
+    <p>With my exit capital from Eder Labs, I started angel investing. Some bets worked, some didn&rsquo;t survive the market cycle, but the founder conviction was always valid. Notable investments include <strong>Leap Wallet</strong> (backed by Pantera and CoinFund), <strong>Obvious Money</strong> (acquired by CoinDCX), <strong>Kayal</strong> (on track for potential IPO), and <strong>NextMind</strong> &mdash; doing breakthrough research in brain-computer interfaces.<span class="cite-mark" data-card="angel">8</span></p>
+
+    <p>Media became another throughline. I co-hosted <strong>The Ramp Show</strong> with Suhas Motwani &mdash; two seasons, twenty-four episodes with some of the sharpest builders in the Indian crypto ecosystem. I ran <strong>This Week in Web3</strong>, a newsletter delivered for a hundred consecutive weeks to close to forty thousand readers, produced by SpaceKayak and powered by The Product House.<span class="cite-mark" data-card="media">9</span></p>
+
+    <p>I was the creative director for the largest <strong>ETH India</strong> conference &mdash; three thousand people in Bangalore in 2022. I&rsquo;ve given guest lectures at <strong>Columbia University</strong> on privacy and AI. I&rsquo;ve spoken at <strong>FIL Conference</strong> on the future of the composable internet. I was one of the first Indians selected for <strong>Balaji Srinivasan&rsquo;s 1729 School</strong> (now The Network State). I completed the <strong>On Deck Design Fellowship</strong>.<span class="cite-mark" data-card="community">10</span></p>
+
+    <p>All of this &mdash; the building, the breaking, the shipping, the investing, the storytelling &mdash; led to one conviction: <em>the earliest stage is where the highest-leverage work happens.</em> Before startups exist. Before anyone else would bet.</p>
+
+    <p>That&rsquo;s why I built <strong>Sanctuary</strong>. That&rsquo;s why I&rsquo;m raising <strong>Imagine Fund</strong>. Not because I read about this gap in a report. Because I&rsquo;ve lived inside it for twelve years.</p>
+
+    <div class="sig">
+      <div class="sig-line"></div>
+      <div class="sig-name">Paul Finney</div>
+      <div class="sig-title">Founder &middot; Sanctuary &middot; SpaceKayak &middot; Imagine Fund</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="ey r">The Arc</div>
+  <div class="gl r"></div>
+  <div class="timeline r">
+    <div class="tl-item"><div class="tl-year">2012</div><div class="tl-content"><strong>Moved to Bangalore.</strong> First employee at Campus Diaries. Built community properties across 700+ campuses.</div></div>
+    <div class="tl-item"><div class="tl-year">2014&ndash;16</div><div class="tl-content"><strong>Photography &amp; creative work.</strong> Fashion Week, India Bike Week, India Golf Tour. Touring musician photographer.</div></div>
+    <div class="tl-item"><div class="tl-year">2016&ndash;17</div><div class="tl-content"><strong>AI product management.</strong> IceCream Labs (Shell, Walmart AI deployments). Then ParallelDots (medical AI, sentiment analysis, Carnifier AI launch).</div></div>
+    <div class="tl-item"><div class="tl-year">2018</div><div class="tl-content"><strong>Co-founded Eder Labs.</strong> AI + privacy. Backed by Accel. Cisco LaunchPad, Target Accelerator, YC Startup School.</div></div>
+    <div class="tl-item"><div class="tl-year">2020</div><div class="tl-content"><strong>Early exit from Eder Labs.</strong> Private consulting — Kaliani Group, Cogknit Semantics. Battery intelligence, government design projects.</div></div>
+    <div class="tl-item"><div class="tl-year">2021</div><div class="tl-content"><strong>Founded SpaceKayak.</strong> Built Fireside (acquired by Chingari, 100M+ downloads). On Deck Design Fellowship. 1729 School by Balaji Srinivasan.</div></div>
+    <div class="tl-item"><div class="tl-year">2022</div><div class="tl-content"><strong>Angel investing begins.</strong> Leap Wallet, Obvious Money, Kayal, NextMind. Creative director for ETH India (3,000 attendees). This Week in Web3 &amp; The Ramp Show launch.</div></div>
+    <div class="tl-item"><div class="tl-year">2023&ndash;24</div><div class="tl-content"><strong>SpaceKayak scales.</strong> 80+ ventures shaped. $1B+ raised collectively. European expansion with Vanagon &amp; Flog Ventures. 100th edition of newsletter.</div></div>
+    <div class="tl-item"><div class="tl-year">2025</div><div class="tl-content"><strong>Sanctuary launches.</strong> Building in Koramangala, Bangalore. Renaissance program. India–SF corridor.</div></div>
+    <div class="tl-item"><div class="tl-year">2026</div><div class="tl-content"><strong>Imagine Fund.</strong> $10M raise. Creative capital as infrastructure. The system goes live.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="ey r">By the Numbers</div>
+  <div class="gl r"></div>
+  <div class="stats-row r">
+    <div class="sr"><div class="sr-n">12</div><div class="sr-l">Years in Startups</div></div>
+    <div class="sr"><div class="sr-n">80+</div><div class="sr-l">Ventures Shaped</div></div>
+    <div class="sr"><div class="sr-n">$1B+</div><div class="sr-l">Raised Collectively</div></div>
+    <div class="sr"><div class="sr-n">20</div><div class="sr-l">Person Team</div></div>
+  </div>
+  <div class="stats-row r">
+    <div class="sr"><div class="sr-n">100</div><div class="sr-l">Newsletter Editions</div></div>
+    <div class="sr"><div class="sr-n">40K</div><div class="sr-l">Newsletter Readers</div></div>
+    <div class="sr"><div class="sr-n">24</div><div class="sr-l">Podcast Episodes</div></div>
+    <div class="sr"><div class="sr-n">2&times;</div><div class="sr-l">Awwwards Designer</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="ey r">Angel Portfolio (Selected)</div>
+  <div class="gl r"></div>
+  <div class="inv-grid r">
+    <div class="inv"><div class="inv-name">Leap Wallet</div><div class="inv-desc">Cosmos super-wallet &middot; Backed by Pantera, CoinFund, Accel</div></div>
+    <div class="inv"><div class="inv-name">Obvious Money</div><div class="inv-desc">Crypto investing &middot; Acquired by CoinDCX</div></div>
+    <div class="inv"><div class="inv-name">Kayal</div><div class="inv-desc">Fintech &middot; Potential IPO track in 2 years</div></div>
+    <div class="inv"><div class="inv-name">NextMind</div><div class="inv-desc">Brain-computer interface &middot; Breakthrough BCI research</div></div>
+    <div class="inv"><div class="inv-name">Pillow</div><div class="inv-desc">Crypto savings &middot; Series A</div></div>
+    <div class="inv"><div class="inv-name">+Others</div><div class="inv-desc">Additional investments alongside friends across web3 &amp; deeptech</div></div>
+  </div>
+</section>
+</div>
+
+<div class="close-sec">
+  <h2>Twelve years of building. <em>One fund</em> to deploy it all.</h2>
+  <p>The builder&rsquo;s journey, the creative practice, the angel track, the media engine &mdash; Imagine Fund is where all of it converges.</p>
+  <a href="#" class="back-link">&larr; Back to Imagine Fund</a>
+</div>
+
+<footer>
+  <div>Sanctuary &copy; 2026</div>
+  <div>Confidential &middot; Not an offer to sell securities</div>
+</footer>
+
+<div class="card-overlay" id="overlay">
+  <div style="position:relative">
+    <div class="battle-card" id="battleCard">
+      <button class="bc-close" id="bcClose">&times;</button>
+      <div id="bcContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cards={
+"campus-diaries":{
+  tag:"2012–2016 · First Startup",
+  title:"Campus Diaries — The First Four Years",
+  body:`<p>Campus Diaries was India's leading youth expression and community platform, connecting over 300,000 students across 1,200+ schools and universities. Founded in 2012 and backed by <strong>TV Mohandas Pai</strong> through Aarin Capital, along with 3one4 Capital and Ravi Mantha's Sagelock Investments.</p>
+  <p>Paul joined as the <em>first employee</em> — a ninety-day-old college fresher. Over four years, he built multiple community properties at scale: film festivals across campuses, spoken word poetry stages, TEDx university chapters, and scaled programs reaching 2,500+ participants per cohort.</p>
+  <p>This was where Paul learned that attention is not marketing — it's infrastructure. Community is not engagement metrics — it's the only moat that survives a cycle. These principles became the foundation of everything that followed.</p>`,
+  pills:["Community","Scale","Youth Media","700+ Campuses","Mohandas Pai"]
+},
+"creative-roots":{
+  tag:"College Years · Creative Origins",
+  title:"The Camera Before the Code",
+  body:`<p>Even while pursuing a Computer Science degree at Chandigarh Engineering College, Paul was already building a parallel creative practice. He shot professionally at <strong>Wills Lifestyle India Fashion Week</strong>, toured with musicians as their official photographer, and covered events like <strong>India Golf Tour</strong> and <strong>India Bike Week</strong>.</p>
+  <p>The camera became his first tool for understanding how stories move through people — how attention is captured, held, and converted into something meaningful. This early creative foundation made him a fundamentally different kind of technologist: one who understands both the build and the story.</p>`,
+  pills:["Photography","Fashion Week","India Bike Week","India Golf Tour","Live Events"]
+},
+"early-ai":{
+  tag:"2016–2017 · Enterprise AI",
+  title:"The Youngest Person in the Room",
+  body:`<p>At <strong>IceCream Labs</strong>, Paul became the youngest person to pitch AI solutions directly to <strong>Shell's Alicia Chang</strong>. He worked alongside the Pro CTO on enterprise-grade AI deployments and helped ship <strong>Walmart's first batch of AI use cases</strong> live in 2016–17 — at a time when most enterprises were still debating whether AI was real.</p>
+  <p>This wasn't theoretical. These were production systems at global scale. The experience taught him something that still informs his investment thesis: <em>the gap between "AI demo" and "AI in production" is where most startups die.</em> Understanding that gap — from the inside — is what makes his portfolio support different.</p>`,
+  pills:["Shell","Walmart","Enterprise AI","Product Management","2016–17"]
+},
+"paralleldots":{
+  tag:"2017 · Machine Intelligence",
+  title:"ParallelDots & Carnifier AI",
+  body:`<p><strong>ParallelDots</strong> was a Delhi-based machine intelligence group building AI products across medical AI, internet-scale sentiment analysis, and consumer applications. Paul joined as a Product Manager and shipped multiple products.</p>
+  <p>His most notable launch was <strong>Carnifier AI</strong> — an app that predicted the popularity of any photo before posting it. The concept was based on one of <strong>Andrej Karpathy's</strong> early research papers. The app went viral, and <strong>Ryan Hoover</strong> himself featured the Product Hunt launch. This was Paul's first direct experience with consumer virality — understanding not just what people use, but <em>why</em> things spread.</p>`,
+  pills:["ParallelDots","Medical AI","Sentiment Analysis","Karpathy","Product Hunt"]
+},
+"eder-labs":{
+  tag:"2018–2020 · Founder Chapter",
+  title:"Eder Labs — Building in the Deep End",
+  body:`<p><strong>Eder Labs</strong> was a deeptech startup enabling enterprises to adopt AI securely with data privacy. Their product, <strong>Fluid</strong>, ran machine learning workloads inside trusted execution environments — federated learning, confidential computing, differential privacy.</p>
+  <p>Paul was a co-founder. The company raised from <strong>Accel</strong> and went through an impressive gauntlet of programs: <strong>Pioneers Batch 1</strong>, <strong>Cisco LaunchPad</strong> (6th cohort), <strong>Target Accelerator</strong>, <strong>NetApp Accelerator</strong>, and <strong>YC Startup School</strong>.</p>
+  <p>The honest lesson: Paul realized he wasn't built to be a deep infrastructure founder in the traditional mold. But the experience was invaluable — he lived the founder's journey from the inside, through fundraising, accelerators, pivots, and the emotional weight of building something from nothing. That scar tissue now informs every founder relationship in his portfolio.</p>`,
+  pills:["Accel","Cisco LaunchPad","Target Accelerator","YC Startup School","Privacy AI","Federated Learning"]
+},
+"spacekayak":{
+  tag:"2021–Present · The Creative Practice",
+  title:"SpaceKayak — Creative Capital for Ventures",
+  body:`<p><strong>SpaceKayak</strong> is a 20-person creative practice built specifically for technically ambitious, early-stage founders. The studio handles brand, narrative, product design, 3D, motion, and launch — the full minus-one-to-zero journey.</p>
+  <p>Portfolio highlights include being the early creative partners for <strong>Emergent, Composio, Sentient AI, Nerve AI</strong> (acquired by OpenAI), <strong>Sarvam AI, IAIRO</strong>, and dozens more. In Europe, SpaceKayak is the creative arm for <strong>Vanagon Ventures</strong> and <strong>Flog Ventures</strong>. The team shaped the brand for <strong>BFI</strong> — Vitalik Buterin and Sandeep Nailwal's blockchain-for-public-health initiative.</p>
+  <p>Over 80 ventures shaped. Over $1B raised collectively by companies touched by the SpaceKayak team. The VCs who backed these companies include Sequoia, a16z, Tiger Global, Accel, Lightspeed, Founders Fund, Khosla Ventures, and SoftBank.</p>`,
+  pills:["80+ Ventures","$1B+ Raised","Emergent","Sentient AI","Sarvam AI","Nerve AI","Composio"]
+},
+"fireside":{
+  tag:"2021 · Consumer Product",
+  title:"Fireside — India's Clubhouse",
+  body:`<p>Paul built the design and consumer experience for <strong>Fireside</strong> — India's first voice-based social platform, essentially a Clubhouse for the Indian market. The app launched in May 2021, built by the founders of <strong>Chingari</strong> (India's TikTok alternative).</p>
+  <p>Fireside was acquired by Chingari, and the combined platform scaled to <strong>100+ million downloads</strong>. Paul's role was architecting the consumer experience — the interface, the rooms, the flows that made audio social feel native to an Indian audience.</p>
+  <p>The product eventually wound down as the entire social audio category consolidated globally. But the experience reinforced Paul's understanding of consumer scale, platform dynamics, and what it takes to ship a product that millions of people actually use.</p>`,
+  pills:["100M+ Downloads","Chingari","Audio Social","Consumer","India"]
+},
+"angel":{
+  tag:"2021–Present · Angel Investing",
+  title:"Angel Portfolio & Investment Track",
+  body:`<p>Using exit capital from Eder Labs, Paul began angel investing — primarily into founders he knew personally from the early crypto ecosystem. The thesis was always founder-first: back the person, not the pitch deck.</p>
+  <p><strong>Leap Wallet</strong> — the leading Cosmos wallet, backed by Pantera Capital, CoinFund, and Accel in a $3.2M round. Paul was among the angel investors alongside Sriharsha Majety (Swiggy CEO) and Phani Kishan.</p>
+  <p><strong>Obvious Money</strong> — a crypto investing platform that was acquired by CoinDCX. <strong>Kayal</strong> — a fintech company performing strongly and potentially on an IPO trajectory. <strong>NextMind</strong> — doing breakthrough research in brain-computer interfaces. Plus a syndicate of co-investments with friends across deeptech and web3.</p>
+  <p>Some bets didn't survive the market. The wave-one crypto thesis was valid around the founders, but the market didn't survive long enough to see outcomes. That honesty — knowing what worked and what didn't — is what shapes Imagine Fund's risk framework.</p>`,
+  pills:["Leap Wallet","Obvious (CoinDCX)","Kayal","NextMind","Pillow","Pantera","CoinFund"]
+},
+"media":{
+  tag:"2022–2024 · Media & Distribution",
+  title:"The Ramp Show & This Week in Web3",
+  body:`<p><strong>The Ramp Show</strong> was a web3 podcast co-hosted by Paul Finney and Suhas Motwani, featuring 24 episodes across two seasons with some of the most respected builders in the Indian crypto ecosystem. Guests included co-founders of Obvious, Biconomy, and builders from across the Cosmos, Polygon, and Ethereum communities.</p>
+  <p><strong>This Week in Web3</strong> was a curated newsletter produced by SpaceKayak and powered by The Product House. It ran for <strong>100 consecutive weeks</strong> and grew to close to <strong>40,000 readers</strong>. The newsletter was supported by protocols like Huddle01, Aave, Celo, Arcana, and Biconomy.</p>
+  <p>This media track record is not incidental to Imagine Fund — it's core infrastructure. Paul has already demonstrated the ability to build an audience, sustain a content engine for years, and create distribution that compounds. <strong>Attn Co</strong>, the fund's distribution arm, is the professional-grade evolution of this practice.</p>`,
+  pills:["24 Episodes","40K Readers","100 Weeks","Ramp Show","TWIW3","SpaceKayak","The Product House"]
+},
+"community":{
+  tag:"2020–Present · Community & Thought Leadership",
+  title:"Stages, Fellowships & Networks",
+  body:`<p><strong>ETH India 2022</strong> — Paul was the creative director for the largest-ever ETH India conference: 3,000 attendees in Bangalore. He designed the visual identity, curated the experience (including SpaceKayak's "Astro Garden" activation), and helped shape the event's creative direction.</p>
+  <p><strong>Columbia University</strong> — Guest lecture on privacy and AI, presenting research from the Eder Labs era to graduate students studying the intersection of technology and policy.</p>
+  <p><strong>FIL Conference</strong> — Talk on the future of the composable internet, exploring how modular infrastructure would reshape how applications are built and distributed.</p>
+  <p><strong>1729 School by Balaji Srinivasan</strong> — One of the first Indians selected for this program (now The Network State). The program's thesis on network-first community building directly influenced the architecture of Sanctuary.</p>
+  <p><strong>On Deck Design Fellowship</strong> — Completed the design fellowship, connecting with a global network of design-driven founders and operators.</p>`,
+  pills:["ETH India","Columbia University","FIL Conference","1729 / Network State","On Deck","TEDx Bangalore"]
+}
+};
+
+const overlay=document.getElementById('overlay');
+const bcContent=document.getElementById('bcContent');
+const bcClose=document.getElementById('bcClose');
+
+document.querySelectorAll('.cite-mark').forEach(el=>{
+  el.addEventListener('click',e=>{
+    e.preventDefault();
+    const key=el.dataset.card;
+    const c=cards[key];
+    if(!c)return;
+    let html=`<div class="bc-tag">${c.tag}</div><div class="bc-title">${c.title}</div><div class="bc-body">${c.body}</div>`;
+    if(c.pills){html+=`<div class="bc-pills">${c.pills.map(p=>`<span class="bc-pill">${p}</span>`).join('')}</div>`;}
+    bcContent.innerHTML=html;
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+
+bcClose.addEventListener('click',()=>{overlay.classList.remove('open');document.body.style.overflow='';});
+overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('open');document.body.style.overflow='';}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay.classList.remove('open');document.body.style.overflow='';}});
+
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')})
+},{threshold:.08,rootMargin:'0px 0px -16px 0px'});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

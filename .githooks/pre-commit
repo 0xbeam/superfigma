@@ -1,0 +1,65 @@
+#!/bin/sh
+
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+. "$repo_root/scripts/git-project-map.sh"
+
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+staged_files="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if [ -z "$staged_files" ]; then
+  exit 0
+fi
+
+projects=""
+has_shared="0"
+
+for file in $staged_files; do
+  project="$(project_for_path "$file")"
+
+  case "$project" in
+    meta)
+      continue
+      ;;
+    shared)
+      has_shared="1"
+      ;;
+    *)
+      case " $projects " in
+        *" $project "*) ;;
+        *) projects="$projects $project" ;;
+      esac
+      ;;
+  esac
+done
+
+project_count=0
+target_project=""
+
+for project in $projects; do
+  project_count=$((project_count + 1))
+  target_project="$project"
+done
+
+if [ "$has_shared" = "1" ] || [ "$project_count" -gt 1 ]; then
+  if branch_matches_project "$branch" "meta"; then
+    exit 0
+  fi
+
+  echo "Pre-commit check failed."
+  echo "This commit spans shared files or multiple project lanes."
+  echo "Use main, meta/*, or ops/* for repo-wide changes."
+  exit 1
+fi
+
+if [ "$project_count" -eq 1 ] && ! branch_matches_project "$branch" "$target_project"; then
+  preferred_branch="$(branch_for_project "$target_project")"
+  echo "Pre-commit check failed."
+  echo "Staged files belong to: $target_project"
+  echo "Preferred branch: $preferred_branch"
+  echo "Switch with: git workon $target_project"
+  exit 1
+fi
+
+exit 0
