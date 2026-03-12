@@ -1,0 +1,21 @@
+# Tool call logs
+tool_calls/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Skills (loaded dynamically)
+skills/
